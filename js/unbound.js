@@ -181,3 +181,29 @@
   window.addEventListener('scroll', function () { requestAnimationFrame(tilt); }, { passive: true });
   tilt();
 })();
+
+/* ---------- 8. hero stage: light parallax that follows the pointer ---------- */
+(function () {
+  'use strict';
+  var stage = document.querySelector('[data-ub-stage]');
+  if (!stage) return;
+  var still = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || /[?&]static=1/.test(location.search);
+  if (still || !window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  var layers = Array.prototype.slice.call(stage.querySelectorAll('[data-depth]'));
+  var tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+  var hero = stage.closest('section') || stage;
+  hero.addEventListener('pointermove', function (e) {
+    var r = hero.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width - 0.5) * 2; ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    if (!raf) raf = requestAnimationFrame(step);
+  });
+  hero.addEventListener('pointerleave', function () { tx = 0; ty = 0; if (!raf) raf = requestAnimationFrame(step); });
+  function step() {
+    cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+    layers.forEach(function (l) {
+      var d = parseFloat(l.getAttribute('data-depth')) || 1;
+      l.style.translate = (cx * 9 * d).toFixed(1) + 'px ' + (cy * 7 * d).toFixed(1) + 'px';
+    });
+    raf = (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) ? requestAnimationFrame(step) : 0;
+  }
+})();
