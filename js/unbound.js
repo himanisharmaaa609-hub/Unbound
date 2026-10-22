@@ -1,7 +1,7 @@
 /* ==========================================================================
    UNBOUND — motion for the sections added on top of site.js
-   1. scroll progress   2. hero headline + word rotator   3. story paths
-   4. compare toggle    5. manifesto words                6. magnetic buttons
+   1. hero film + headline   2. word rotator   3. story paths
+   4. workspace screens
    Reduced motion and ?static=1 show every final state at once.
    ========================================================================== */
 (function () {
@@ -21,25 +21,53 @@
   window.addEventListener('scroll', queue, { passive: true });
   window.addEventListener('resize', queue);
 
-  /* ---------- 1. scroll progress ---------- */
-  var bar = $('.ub-progress');
-  if (bar) onScrollFns.push(function () {
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.setProperty('--sp', h > 0 ? Math.min(1, window.scrollY / h).toFixed(4) : 0);
-  });
-
-  /* ---------- 2. hero: "unbound." rises letter by letter, flame to violet ---------- */
-  var word = $('.ub-unbound > span');
-  if (word && !still) {
-    var text = word.textContent, from = [255, 74, 28], to = [79, 43, 245], n = text.length;
-    word.parentNode.classList.add('is-split');
-    word.innerHTML = text.split('').map(function (ch, i) {
-      var k = Math.min(1, i / Math.max(1, n - 2));
-      var c = from.map(function (v, j) { return Math.round(v + (to[j] - v) * k); });
-      return '<span class="ub-ch" style="--i:' + i + ';color:rgb(' + c.join(',') + ')">' + ch + '</span>';
-    }).join('');
+  /* ---------- 1. hero: the film plays only while on screen; phones get the lighter file ---------- */
+  var video = $('[data-ub-video]');
+  if (video) {
+    var mobileSrc = video.getAttribute('data-src-mobile');
+    if (mobileSrc && window.innerWidth < 760) {
+      $$('source', video).forEach(function (s) { s.remove(); });
+      video.src = mobileSrc;
+    }
+    var ready = function () { video.classList.add('is-ready'); };
+    video.addEventListener('playing', ready, { once: true });
+    if (still) { video.removeAttribute('autoplay'); video.pause(); }
+    else {
+      var tryPlay = function () { var p = video.play(); if (p && p.catch) p.catch(function () {}); };
+      if (video.readyState >= 2) tryPlay(); else video.addEventListener('canplay', tryPlay, { once: true });
+      video.load();
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          es.forEach(function (e) { if (e.isIntersecting) tryPlay(); else video.pause(); });
+        }, { threshold: 0.05 }).observe(video);
+      }
+      document.addEventListener('visibilitychange', function () { if (document.hidden) video.pause(); else tryPlay(); });
+    }
   }
 
+  // headline: each word rises in on its own, in order
+  var h1 = $('.ub-h1');
+  if (h1 && !still) {
+    var i = 0;
+    var wrapWords = function (node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+            var w = document.createElement('span'); w.className = 'ub-w';
+            var inner = document.createElement('span'); inner.style.setProperty('--i', i++); inner.textContent = part;
+            w.appendChild(inner); frag.appendChild(w);
+          });
+          node.replaceChild(frag, n);
+        } else if (n.nodeType === 1) wrapWords(n);
+      });
+    };
+    wrapWords(h1);
+  }
+
+  /* ---------- 2. word rotator ---------- */
   var rot = $('.ub-rot');
   if (rot && !still) {
     var words = $$('.ub-rot-w', rot), at = 0;
@@ -48,12 +76,12 @@
       var cur = words[at], next = words[(at + 1) % words.length];
       cur.classList.remove('is-on'); cur.classList.add('is-out');
       next.classList.remove('is-out'); next.classList.add('is-on');
-      setTimeout(function () { cur.classList.remove('is-out'); }, 600);
+      setTimeout(function () { cur.classList.remove('is-out'); }, 700);
       at = (at + 1) % words.length;
-    }, 2400);
+    }, 2800);
   }
 
-  /* ---------- 3. story: two paths draw as you read, and meet at the end ---------- */
+  /* ---------- 3. story: two lines draw as you read, and meet at the end ---------- */
   var story = $('#story');
   if (story) {
     var chapters = $$('.ub-chapter', story), stepEl = $('[data-ub-step]', story), list = $('.ub-chapters', story);
@@ -68,114 +96,44 @@
     } else {
       onScrollFns.push(function () {
         var r = list.getBoundingClientRect(), vh = window.innerHeight;
-        // 0 when the chapters' top reaches 65% of the screen, 1 when their bottom does
         var p = (vh * 0.65 - r.top) / Math.max(1, r.height);
         setStory(Math.max(0, Math.min(1, p)));
         var active = 0;
-        chapters.forEach(function (c, i) {
-          var cr = c.getBoundingClientRect();
-          if (cr.top < vh * 0.62) active = i;
-        });
-        chapters.forEach(function (c, i) { c.classList.toggle('is-on', i === active); });
+        chapters.forEach(function (c, k) { if (c.getBoundingClientRect().top < vh * 0.62) active = k; });
+        chapters.forEach(function (c, k) { c.classList.toggle('is-on', k === active); });
         if (stepEl) stepEl.textContent = '0' + (active + 1);
       });
     }
   }
 
-  /* ---------- 4. compare: the usual way vs the UNBOUND way ---------- */
-  var cmp = $('[data-ub-compare]');
-  if (cmp) {
-    var btns = $$('[data-ub-mode]', cmp), touched = false, auto = null;
-    var setMode = function (m) {
-      cmp.setAttribute('data-mode', m);
-      btns.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-ub-mode') === m ? 'true' : 'false'); });
+  /* ---------- 4. workspace: sample screens rotate on their own ---------- */
+  var wrap = $('[data-ub-work]');
+  if (wrap) {
+    var tabs = $$('[data-ub-shot]', wrap), shots = $$('.ub-shot', wrap);
+    var cur = 0, t0 = 0, DUR = 7000, paused = false, visible = false;
+    var show = function (k) {
+      cur = k; t0 = performance.now();
+      tabs.forEach(function (t, j) { t.classList.toggle('is-on', j === k); t.setAttribute('aria-selected', j === k ? 'true' : 'false'); t.style.setProperty('--wp', 0); });
+      shots.forEach(function (s, j) { s.classList.toggle('is-on', j === k); });
     };
-    btns.forEach(function (b) {
-      b.addEventListener('click', function () { touched = true; clearInterval(auto); setMode(b.getAttribute('data-ub-mode')); });
-    });
-    if (still) setMode('unbound');
-    else if ('IntersectionObserver' in window) {
-      // shows the usual way first, then breaks the walls down; keeps alternating until the visitor picks one
-      var started = false;
-      new IntersectionObserver(function (es) {
-        es.forEach(function (e) {
-          if (!e.isIntersecting || started || touched) return;
-          started = true;
-          setTimeout(function () { if (!touched) setMode('unbound'); }, 1400);
-          auto = setInterval(function () { if (touched || document.hidden) return; setMode(cmp.getAttribute('data-mode') === 'unbound' ? 'usual' : 'unbound'); }, 5200);
-        });
-      }, { threshold: 0.45 }).observe(cmp);
+    tabs.forEach(function (t, k) { t.addEventListener('click', function () { show(k); }); });
+    if (!still) {
+      wrap.addEventListener('pointerenter', function () { paused = true; });
+      wrap.addEventListener('pointerleave', function () { paused = false; });
+      var tick = function (now) {
+        var done = parseFloat(tabs[cur].style.getPropertyValue('--wp')) || 0;
+        if (visible && !paused && !document.hidden) {
+          var p = Math.min(1, (now - t0) / DUR);
+          tabs[cur].style.setProperty('--wp', p.toFixed(4));
+          if (p >= 1) show((cur + 1) % tabs.length);
+        } else t0 = now - DUR * done;
+        requestAnimationFrame(tick);
+      };
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (e) { visible = e.isIntersecting; }); }, { threshold: 0.3 }).observe(wrap);
+      else visible = true;
+      t0 = performance.now(); requestAnimationFrame(tick);
     }
   }
 
-  /* ---------- 5. manifesto: words light up as the line scrolls past ---------- */
-  var mani = $('[data-ub-mani]');
-  if (mani) {
-    var hot = { 'silos.': 'is-hot', 'unbound.': 'is-hot2', 'walls.': 'is-hot', 'noise.': 'is-hot2' };
-    mani.innerHTML = mani.textContent.trim().split(/\s+/).map(function (w) {
-      return '<span class="ub-w ' + (hot[w.toLowerCase()] || '') + '">' + w + '</span>';
-    }).join(' ');
-    var mw = $$('.ub-w', mani);
-    if (still) mw.forEach(function (w) { w.classList.add('is-on'); });
-    else onScrollFns.push(function () {
-      var r = mani.getBoundingClientRect(), vh = window.innerHeight;
-      var p = (vh * 0.85 - r.top) / Math.max(1, r.height + vh * 0.35);
-      var lit = Math.round(Math.max(0, Math.min(1, p)) * mw.length);
-      mw.forEach(function (w, i) { w.classList.toggle('is-on', i < lit); });
-    });
-  }
-
-  /* ---------- 6. magnetic buttons (fine pointers only) ---------- */
-  if (!still && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
-    $$('.ub-magnet').forEach(function (b) {
-      b.addEventListener('pointermove', function (e) {
-        var r = b.getBoundingClientRect();
-        var x = (e.clientX - r.left - r.width / 2) * 0.22, y = (e.clientY - r.top - r.height / 2) * 0.35;
-        b.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
-      });
-      b.addEventListener('pointerleave', function () { b.style.transform = ''; });
-    });
-  }
-
   queue();
-})();
-
-/* ---------- 7. workspace: sample screens rotate on their own; the frame tilts upright as it scrolls in ---------- */
-(function () {
-  'use strict';
-  var wrap = document.querySelector('[data-ub-work]');
-  if (!wrap) return;
-  var still = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || /[?&]static=1/.test(location.search);
-  var tabs = Array.prototype.slice.call(wrap.querySelectorAll('[data-ub-shot]'));
-  var shots = Array.prototype.slice.call(wrap.querySelectorAll('.ub-shot'));
-  var frame = wrap.querySelector('.ub-browser');
-  var at = 0, t0 = 0, DUR = 6500, paused = false, visible = false, raf = 0;
-  var show = function (i) {
-    at = i; t0 = performance.now();
-    tabs.forEach(function (t, k) { t.classList.toggle('is-on', k === i); t.setAttribute('aria-selected', k === i ? 'true' : 'false'); t.style.setProperty('--wp', 0); });
-    shots.forEach(function (s, k) { s.classList.toggle('is-on', k === i); });
-  };
-  tabs.forEach(function (t, i) { t.addEventListener('click', function () { show(i); }); });
-  if (still) return;
-  wrap.addEventListener('pointerenter', function () { paused = true; });
-  wrap.addEventListener('pointerleave', function () { paused = false; t0 = performance.now() - DUR * (parseFloat(tabs[at].style.getPropertyValue('--wp')) || 0); });
-  var tick = function (now) {
-    if (visible && !paused && !document.hidden) {
-      var p = Math.min(1, (now - t0) / DUR);
-      tabs[at].style.setProperty('--wp', p.toFixed(4));
-      if (p >= 1) show((at + 1) % tabs.length);
-    } else if (paused || !visible) { t0 = now - DUR * (parseFloat(tabs[at].style.getPropertyValue('--wp')) || 0); }
-    raf = requestAnimationFrame(tick);
-  };
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (e) { visible = e.isIntersecting; }); }, { threshold: 0.3 }).observe(wrap);
-  else visible = true;
-  t0 = performance.now(); raf = requestAnimationFrame(tick);
-  var tilt = function () {
-    var r = frame.getBoundingClientRect(), vh = window.innerHeight;
-    var p = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.75)));
-    frame.style.setProperty('--tilt', ((1 - p) * 16).toFixed(2) + 'deg');
-    frame.style.setProperty('--tscale', (0.94 + p * 0.06).toFixed(4));
-  };
-  window.addEventListener('scroll', function () { requestAnimationFrame(tilt); }, { passive: true });
-  tilt();
 })();
