@@ -30,6 +30,8 @@ Useful switches for testing:
 - `js/unbound.js`: headline and word rotator, scroll-drawn story paths, compare toggle, manifesto highlight, scroll progress, magnetic buttons
 - `assets/team/`: founder portraits (`himani.jpg`, `amisha.jpg`)
 - `assets/qr/`: QR codes for each founder's LinkedIn
+- `assets/screens/`: the workspace screenshots (monthly report, content calendar, media plan, PR tracker, activation tracker). They show demo data for a fictional sample brand and say so on the page; swap in real screens from client work when you have them, keeping the same file names and a 16:10 crop
+- `assets/tools/`: platform logos for the tools strip, from Simple Icons (CC0). The logos remain trademarks of their owners; edit the list to match the tools you actually use
 - `assets/voice/`: the voice agent's spoken answers, three phrasings per answer (`<id>.mp3`, `<id>-2.mp3`, `<id>-3.mp3`)
 
 ## Chat and voice agent

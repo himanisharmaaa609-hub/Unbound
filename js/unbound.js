@@ -139,3 +139,43 @@
 
   queue();
 })();
+
+/* ---------- 7. workspace: sample screens rotate on their own; the frame tilts upright as it scrolls in ---------- */
+(function () {
+  'use strict';
+  var wrap = document.querySelector('[data-ub-work]');
+  if (!wrap) return;
+  var still = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || /[?&]static=1/.test(location.search);
+  var tabs = Array.prototype.slice.call(wrap.querySelectorAll('[data-ub-shot]'));
+  var shots = Array.prototype.slice.call(wrap.querySelectorAll('.ub-shot'));
+  var frame = wrap.querySelector('.ub-browser');
+  var at = 0, t0 = 0, DUR = 6500, paused = false, visible = false, raf = 0;
+  var show = function (i) {
+    at = i; t0 = performance.now();
+    tabs.forEach(function (t, k) { t.classList.toggle('is-on', k === i); t.setAttribute('aria-selected', k === i ? 'true' : 'false'); t.style.setProperty('--wp', 0); });
+    shots.forEach(function (s, k) { s.classList.toggle('is-on', k === i); });
+  };
+  tabs.forEach(function (t, i) { t.addEventListener('click', function () { show(i); }); });
+  if (still) return;
+  wrap.addEventListener('pointerenter', function () { paused = true; });
+  wrap.addEventListener('pointerleave', function () { paused = false; t0 = performance.now() - DUR * (parseFloat(tabs[at].style.getPropertyValue('--wp')) || 0); });
+  var tick = function (now) {
+    if (visible && !paused && !document.hidden) {
+      var p = Math.min(1, (now - t0) / DUR);
+      tabs[at].style.setProperty('--wp', p.toFixed(4));
+      if (p >= 1) show((at + 1) % tabs.length);
+    } else if (paused || !visible) { t0 = now - DUR * (parseFloat(tabs[at].style.getPropertyValue('--wp')) || 0); }
+    raf = requestAnimationFrame(tick);
+  };
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (e) { visible = e.isIntersecting; }); }, { threshold: 0.3 }).observe(wrap);
+  else visible = true;
+  t0 = performance.now(); raf = requestAnimationFrame(tick);
+  var tilt = function () {
+    var r = frame.getBoundingClientRect(), vh = window.innerHeight;
+    var p = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.75)));
+    frame.style.setProperty('--tilt', ((1 - p) * 16).toFixed(2) + 'deg');
+    frame.style.setProperty('--tscale', (0.94 + p * 0.06).toFixed(4));
+  };
+  window.addEventListener('scroll', function () { requestAnimationFrame(tilt); }, { passive: true });
+  tilt();
+})();
