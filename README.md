@@ -24,12 +24,11 @@ Useful switches for testing:
 
 - `index.html`: the homepage (hero, roles strip, your team, story, what we do, services, why UNBOUND, manifesto, founders, process, booking, footer)
 - `contact/index.html`: contact page with a message form
-- `css/site.css`: the base components (grid, buttons, tabs, live mocks, calendar, chat bar)
-- `css/unbound.css`: the design layer: Instrument Serif and Instrument Sans, ink and paper, hairlines, the hero film, roster, workspace, story, table, founders
+- `css/site.css`: the base design system (grid, type, buttons, cards, founder cards, calendar)
+- `css/unbound.css`: UNBOUND palette and the new sections and motion
 - `js/site.js`: nav, tabs, reveal-on-scroll, hanging founder cards, booking calendar, chat bar and voice agent, forms
-- `js/unbound.js`: hero film control, headline and word rotator, scroll-drawn story paths, workspace screens
-- `assets/video/`: the hero film (`hero.mp4`, `hero.webm`, a lighter `hero-720.mp4` for phones, and `hero-poster.jpg`). It is an abstract 12-second loop rendered for this site; replace it with your own footage at 16:9, keeping the same file names. Keep it dark so the white type stays readable
-- `assets/team/`: founder portraits (`himani.jpg`, `amisha.jpg`), shown in black and white until hovered
+- `js/unbound.js`: headline and word rotator, scroll-drawn story paths, compare toggle, manifesto highlight, scroll progress, magnetic buttons
+- `assets/team/`: founder portraits (`himani.jpg`, `amisha.jpg`)
 - `assets/qr/`: QR codes for each founder's LinkedIn
 - `assets/screens/`: the workspace screenshots (monthly report, content calendar, media plan, PR tracker, activation tracker). They show demo data for a fictional sample brand and say so on the page; swap in real screens from client work when you have them, keeping the same file names and a 16:10 crop
 - `assets/tools/`: platform logos for the tools strip, from Simple Icons (CC0). The logos remain trademarks of their owners; edit the list to match the tools you actually use
@@ -45,7 +44,17 @@ The Talk bar at the bottom answers common questions in text; the Voice button op
 
 ## Palette
 
-The site is deliberately quiet: ink `#0B0B0C` on white, a warm paper `#F4F2EE` for alternate bands, and Flame `#FF4A1C` as the one accent, used only as a small mark (the dot in the logo, the dot in the hero meta line, the point where the founders' paths meet). Ultraviolet `#4F2BF5` appears in the logo and the hero film only. Type is Instrument Serif for headlines and Instrument Sans for everything else. Tokens are at the top of `css/unbound.css`.
+| Role | Name | Hex |
+| --- | --- | --- |
+| Primary | Ink | `#0A0A0B` |
+| Primary | White | `#FFFFFF` |
+| Primary | Flame | `#FF4A1C` |
+| Primary | Ultraviolet | `#4F2BF5` |
+| Secondary | Saffron | `#FFC23A` |
+| Secondary | Lilac | `#CBBEFF` |
+| Secondary | Mint | `#2DD4A7` |
+
+Tokens live at the top of `css/site.css` (`--flame`, `--violet`, `--saffron`, `--lilac`, `--mint`).
 
 ## Things to swap in before going live
 

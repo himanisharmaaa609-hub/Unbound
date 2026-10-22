@@ -15,12 +15,13 @@
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="../css/site.css?v=ub1">
 <link rel="stylesheet" href="../css/unbound.css?v=ub1">
 </head>
 <body>
 <div class="frame" aria-hidden="true"><i></i></div>
+<div class="ub-progress" aria-hidden="true"><i></i></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="ub-mark" viewBox="0 0 48 48"><circle cx="21" cy="27" r="14" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-dasharray="66 21.96" transform="rotate(-20 21 27)"/><circle cx="27.3" cy="13.4" r="2.6" fill="#4F2BF5"/><circle cx="30.6" cy="6.9" r="5.4" fill="#FF4A1C"/></symbol>
@@ -51,8 +52,17 @@
   <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z"/></symbol>
 </svg>
 
+<!-- top strip -->
+<div class="strip">
+  <div class="wrap">
+    <span class="strip-badge">Now open</span>
+    <span><b>Book a free 30-minute brand session</b><span class="hide-sm"> with both founders</span></span>
+    <a href="../#book" title="Book your session">Book<span class="hide-sm"> your session</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
+  </div>
+</div>
+
 <!-- nav -->
-<header class="nav ub-solid" id="nav">
+<header class="nav" id="nav">
   <div class="wrap">
     <a class="brand" href="../" aria-label="UNBOUND home" title="UNBOUND home"><svg class="brand-mark" aria-hidden="true"><use href="#ub-mark"/></svg><span class="brand-word">UNBOUND</span></a>
     <nav class="nav-links" aria-label="Primary">
@@ -71,7 +81,7 @@
       </div>
       <a href="../#story" title="Our story">Our story</a>
       <a href="../#usp" title="Why UNBOUND">Why UNBOUND</a>
-      <a href="../#founders" title="Founders">Founders</a>
+      <a href="../#team" title="Founders">Founders</a>
       <a href="./" title="Contact">Contact</a>
     </nav>
     <div class="nav-cta">
@@ -134,7 +144,7 @@
         <ul>
           <li><a href="../#story" title="Our story">Our story</a></li>
           <li><a href="../#usp" title="Why UNBOUND">Why UNBOUND</a></li>
-          <li><a href="../#founders" title="Founders">Founders</a></li>
+          <li><a href="../#team" title="Founders">Founders</a></li>
           <li><a href="../#ways" title="Ways to work">Ways to work</a></li>
         </ul>
       </div>
@@ -157,6 +167,7 @@
     </div>
     <div class="foot-bottom">
       <span>© 2026 UNBOUND. All rights reserved.</span>
+      <span class="lanebar" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       <a class="foot-hi" href="mailto:hello@example.com?subject=UNBOUND%20%E2%80%94%20let%27s%20talk" title="Say hi to the founders">Say hi to the founders</a>
     </div>
   </div>

@@ -9,14 +9,14 @@
 <meta property="og:description" content="A whole marketing department on one retainer: CMO, brand manager, product marketer, PR, social, content, creative, performance, media and events.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="assets/logo-512.png">
-<meta name="theme-color" content="#0A0A0B">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="css/site.css?v=ub1">
 <link rel="stylesheet" href="css/unbound.css?v=ub1">
 <script type="application/ld+json">
@@ -24,6 +24,7 @@
 </head>
 <body>
 <div class="frame" aria-hidden="true"><i></i></div>
+<div class="ub-progress" aria-hidden="true"><i></i></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="ub-mark" viewBox="0 0 48 48"><circle cx="21" cy="27" r="14" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-dasharray="66 21.96" transform="rotate(-20 21 27)"/><circle cx="27.3" cy="13.4" r="2.6" fill="#4F2BF5"/><circle cx="30.6" cy="6.9" r="5.4" fill="#FF4A1C"/></symbol>
@@ -59,6 +60,15 @@
   <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z"/></symbol>
 </svg>
 
+<!-- top strip -->
+<div class="strip">
+  <div class="wrap">
+    <span class="strip-badge">Now open</span>
+    <span><b>Your whole marketing team, one retainer</b><span class="hide-sm"> · free 30-minute session with the founders</span></span>
+    <a href="#book" title="Book your session">Book<span class="hide-sm"> your session</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
+  </div>
+</div>
+
 <!-- nav -->
 <header class="nav" id="nav">
   <div class="wrap">
@@ -80,7 +90,7 @@
       <a href="#roles" title="Your team">Your team</a>
       <a href="#workspace" title="Workspace">Workspace</a>
       <a href="#story" title="Our story">Our story</a>
-      <a href="#founders" title="Founders">Founders</a>
+      <a href="#team" title="Founders">Founders</a>
       <a href="contact/" title="Contact">Contact</a>
     </nav>
     <div class="nav-cta">
@@ -94,25 +104,35 @@
 <main id="top">
 
 <!-- ========================== HERO ========================== -->
-<section class="ub-hero" id="hero">
-  <div class="ub-hero-media" aria-hidden="true">
-    <video class="ub-hero-video" muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg" data-ub-video data-src-mobile="assets/video/hero-720.mp4">
-      <source src="assets/video/hero.webm" type="video/webm">
-      <source src="assets/video/hero.mp4" type="video/mp4">
-    </video>
-    <div class="ub-hero-shade"></div>
-  </div>
-  <div class="wrap ub-hero-inner">
-    <p class="ub-hero-meta"><span>Founder-led</span><span>India, working worldwide</span><span>Est. 2026</span></p>
-    <h1 class="ub-h1">Your entire marketing team, <em>unbound.</em></h1>
-    <p class="ub-hero-lead">Skip months of hiring. Outsource the whole department to one founder-led team, on one retainer. Need a <span class="ub-rot" aria-live="off"><span class="ub-rot-w is-on">chief marketing officer?</span><span class="ub-rot-w">brand manager?</span><span class="ub-rot-w">PR manager?</span><span class="ub-rot-w">social media lead?</span><span class="ub-rot-w">product marketer?</span><span class="ub-rot-w">events team?</span></span></p>
-    <div class="hero-actions">
-      <a class="btn btn-light btn-lg" href="#book" title="Book a call">Book a call <svg><use href="#i-arrow"/></svg></a>
-      <a class="btn btn-ghost btn-lg ub-btn-glass" href="#roles" title="Meet your team">Meet your team</a>
-    </div>
-    <div class="ub-hero-foot">
-      <span class="ub-hero-roles">Strategy · Brand · PR · Social · Content · Creative · Performance · Media · Events</span>
-      <a class="ub-scroll" href="#seats" aria-label="Scroll down"><span>Scroll</span><i></i></a>
+<section class="hero ub-hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow ub-hero-eyebrow">Your outsourced marketing department</p>
+        <h1 class="h1 ub-h1"><span class="ub-line">Your entire marketing team,</span> <span class="ub-line ub-unbound" aria-label="unbound."><span aria-hidden="true">unbound.</span></span></h1>
+        <p class="lead ub-hero-lead">Skip months of hiring. Outsource your whole marketing department to one founder-led team: strategy, brand, PR, social, content, campaigns and events, on one retainer. Need a <span class="ub-rot" aria-live="off"><span class="ub-rot-w is-on">CMO?</span><span class="ub-rot-w">brand manager?</span><span class="ub-rot-w">PR manager?</span><span class="ub-rot-w">social media lead?</span><span class="ub-rot-w">product marketer?</span><span class="ub-rot-w">events team?</span></span></p>
+        <div class="hero-actions">
+          <a class="btn btn-dark btn-lg ub-magnet" href="#book" title="Book a call">Book a call <svg><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-ghost btn-lg" href="#roles" title="Meet your team">Meet your team</a>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="ub-orbit" aria-hidden="true">
+          <div class="ub-orbit-glow"></div>
+          <svg class="ub-orbit-rings" viewBox="0 0 400 400"><circle cx="200" cy="200" r="150"/><circle cx="200" cy="200" r="104"/></svg>
+          <div class="ub-orbit-core">
+            <svg class="ub-core-mark" viewBox="0 0 48 48"><circle class="ub-core-ring" cx="21" cy="27" r="14" fill="none" stroke="#0A0A0B" stroke-width="6" stroke-linecap="round" pathLength="100" transform="rotate(-20 21 27)"/><circle class="ub-core-trail" cx="27.3" cy="13.4" r="2.6" fill="#4F2BF5"/><circle class="ub-core-dot" cx="30.6" cy="6.9" r="5.4" fill="#FF4A1C"/></svg>
+          </div>
+          <div class="ub-orbit-track">
+            <span class="ub-chip" style="--a:0deg" data-tone="d"><i></i>CMO</span>
+            <span class="ub-chip" style="--a:60deg" data-tone="g"><i></i>Brand manager</span>
+            <span class="ub-chip" style="--a:120deg" data-tone="s"><i></i>Social media</span>
+            <span class="ub-chip" style="--a:180deg" data-tone="r"><i></i>PR manager</span>
+            <span class="ub-chip" style="--a:240deg" data-tone="d"><i></i>Content lead</span>
+            <span class="ub-chip" style="--a:300deg" data-tone="g"><i></i>Events</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -137,7 +157,7 @@
   <div class="wrap">
     <div class="sec-head center reveal">
       <p class="eyebrow plain ub-kicker">Your team</p>
-      <h2 class="h2">The marketing department you'd hire, <em>already hired.</em></h2>
+      <h2 class="h2">The marketing department you'd hire, <em class="ub-em">already hired.</em></h2>
       <p class="lead">Building a marketing team in-house means months of hiring, ten salaries and a few agencies on top. With UNBOUND you get every role below from day one, on one retainer, led by the founders. Scale up for a launch, scale down after it.</p>
     </div>
     <div class="ub-role-grid">
@@ -210,7 +230,7 @@
   <div class="wrap">
     <div class="sec-head center reveal">
       <p class="eyebrow plain ub-kicker">Your workspace</p>
-      <h2 class="h2">See what your team is doing, <em>every single week.</em></h2>
+      <h2 class="h2">See what your team is doing, <em class="ub-em">every single week.</em></h2>
       <p class="lead">Every client gets a shared workspace: the monthly report, the content calendar, the media plan, the PR tracker and live updates from the ground. Comment, approve and export a board-ready PDF.</p>
     </div>
     <div class="ub-work-grid" data-ub-work>
@@ -253,7 +273,7 @@
   <div class="wrap">
     <div class="sec-head center reveal">
       <p class="eyebrow plain ub-kicker">Our story</p>
-      <h2 class="h2">Two minds. Two worlds. <em>One story.</em></h2>
+      <h2 class="h2">Two minds. Two worlds. <em class="ub-em">One story.</em></h2>
       <p class="lead">UNBOUND didn't start with a business plan. It started with two people who kept seeing the same problem from opposite sides of the table.</p>
     </div>
 
@@ -265,13 +285,13 @@
               <linearGradient id="ubp-a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF4A1C"/><stop offset="1" stop-color="#FFC23A"/></linearGradient>
               <linearGradient id="ubp-b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4F2BF5"/><stop offset="1" stop-color="#CBBEFF"/></linearGradient>
             </defs>
-            <path class="ub-path-bg" d="M 70 30 C 70 140, 40 190, 120 250 S 200 330, 200 356"/>
-            <path class="ub-path-bg" d="M 330 30 C 330 120, 370 200, 280 250 S 200 330, 200 356"/>
-            <path class="ub-path ub-path-a" pathLength="100" d="M 70 30 C 70 140, 40 190, 120 250 S 200 330, 200 356"/>
-            <path class="ub-path ub-path-b" pathLength="100" d="M 330 30 C 330 120, 370 200, 280 250 S 200 330, 200 356"/>
+            <path class="ub-path-bg" d="M 70 30 C 70 140, 40 190, 120 250 S 200 330, 200 372"/>
+            <path class="ub-path-bg" d="M 330 30 C 330 120, 370 200, 280 250 S 200 330, 200 372"/>
+            <path class="ub-path ub-path-a" pathLength="100" d="M 70 30 C 70 140, 40 190, 120 250 S 200 330, 200 372"/>
+            <path class="ub-path ub-path-b" pathLength="100" d="M 330 30 C 330 120, 370 200, 280 250 S 200 330, 200 372"/>
             <circle class="ub-node ub-node-a" cx="70" cy="30" r="9"/>
             <circle class="ub-node ub-node-b" cx="330" cy="30" r="9"/>
-            <g class="ub-meet" transform="translate(200 392)">
+            <g class="ub-meet" transform="translate(200 410)">
               <circle class="ub-meet-ring" r="30" pathLength="100" transform="rotate(-20)"/>
               <circle class="ub-meet-dot" cx="20" cy="-42" r="11"/>
             </g>
@@ -486,7 +506,7 @@
 <section class="section" id="services">
   <div class="wrap">
     <div class="sec-head center reveal">
-      <h2 class="h2">Six disciplines. <em>Zero silos.</em></h2>
+      <h2 class="h2">Six disciplines. <em class="ub-em">Zero silos.</em></h2>
       <p class="lead">Everything a brand needs to be seen, heard and remembered, planned by one team on one brief. Hover a card to see what is inside.</p>
     </div>
     <div class="lanes svcs ub-svcs">
@@ -583,17 +603,34 @@
   <div class="wrap">
     <div class="sec-head center reveal">
       <p class="eyebrow plain ub-kicker">Why UNBOUND</p>
-      <h2 class="h2">Hiring a marketing team takes months. <em>Ours starts next week.</em></h2>
+      <h2 class="h2">Hiring a marketing team takes months. <em class="ub-em">Ours starts next week.</em></h2>
       <p class="lead">The usual way is a long hiring plan, a team of specialists in-house, and a PR firm, a social shop, a creative agency and an events vendor on top. We replace all of it with one team.</p>
     </div>
 
-    <div class="ub-table reveal" role="table" aria-label="The usual way compared with UNBOUND">
-      <div class="ub-tr ub-th" role="row"><span role="columnheader"></span><span role="columnheader">The usual way</span><span role="columnheader">With UNBOUND</span></div>
-      <div class="ub-tr" role="row"><span role="rowheader">Time to start</span><span role="cell">Months of hiring before any work starts</span><span role="cell">A full senior team, working from week one</span></div>
-      <div class="ub-tr" role="row"><span role="rowheader">Cost</span><span role="cell">Ten salaries, plus agency fees on top</span><span role="cell">One monthly retainer that scales up or down</span></div>
-      <div class="ub-tr" role="row"><span role="rowheader">Coordination</span><span role="cell">Specialists and agencies, each with its own brief</span><span role="cell">One team, one brief, one story</span></div>
-      <div class="ub-tr" role="row"><span role="rowheader">Who does the work</span><span role="cell">Seniors pitch, juniors run the account</span><span role="cell">Both founders lead your account</span></div>
-      <div class="ub-tr" role="row"><span role="rowheader">Reporting</span><span role="cell">Activity: posts, impressions, footfall</span><span role="cell">What moved: awareness, conversation, sales</span></div>
+    <div class="ub-compare reveal" data-ub-compare data-mode="usual">
+      <div class="ub-switch" role="group" aria-label="Compare">
+        <button type="button" data-ub-mode="usual" aria-pressed="true">The usual way</button>
+        <button type="button" data-ub-mode="unbound" aria-pressed="false">The UNBOUND way</button>
+        <i aria-hidden="true"></i>
+      </div>
+      <div class="ub-compare-body">
+        <div class="ub-board" aria-hidden="true">
+          <span class="ub-silo" style="--i:0" data-tone="d">CMO</span>
+          <span class="ub-silo" style="--i:1" data-tone="g">Brand</span>
+          <span class="ub-silo" style="--i:2" data-tone="s">PR</span>
+          <span class="ub-silo" style="--i:3" data-tone="r">Social</span>
+          <span class="ub-silo" style="--i:4" data-tone="d">Content</span>
+          <span class="ub-silo" style="--i:5" data-tone="g">Events</span>
+          <svg class="ub-board-ring" viewBox="0 0 48 48"><circle cx="21" cy="27" r="14" fill="none" stroke="#0A0A0B" stroke-width="3" stroke-linecap="round" stroke-dasharray="66 21.96" transform="rotate(-20 21 27)"/><circle cx="30.6" cy="6.9" r="4" fill="#FF4A1C"/></svg>
+          <span class="ub-board-label">One team</span>
+        </div>
+        <ul class="ub-rows">
+          <li><span class="ub-x">Months of hiring before any work starts</span><span class="ub-v">A full senior team, working from week one</span></li>
+          <li><span class="ub-x">Ten salaries, plus agency fees on top</span><span class="ub-v">One monthly retainer that scales up or down</span></li>
+          <li><span class="ub-x">Specialists and agencies, each with its own brief</span><span class="ub-v">One team, one brief, one story</span></li>
+          <li><span class="ub-x">Seniors pitch, juniors run the account</span><span class="ub-v">Both founders lead your account</span></li>
+        </ul>
+      </div>
     </div>
 
     <div class="ub-pillars">
@@ -608,38 +645,104 @@
 <!-- ========================== MANIFESTO ========================== -->
 <section class="section tight ub-manifesto" aria-label="What we believe">
   <div class="wrap">
-    <p class="ub-mani reveal">Great brands aren't built in silos. They're built when the headline, the feed, the billboard and the handshake all say the same thing. No walls. No layers. No noise. Just your story, unbound.</p>
+    <p class="ub-mani" data-ub-mani>Great brands aren't built in silos. They're built when the headline, the feed, the billboard and the handshake all say the same thing. No walls. No layers. No noise. Just your story, unbound.</p>
   </div>
 </section>
 
-<!-- ========================== FOUNDERS ========================== -->
-<section class="section ub-founders" id="founders" aria-label="Founders">
+<!-- ========================== TEAM ========================== -->
+<section class="section team" id="team" aria-label="Founders">
   <div class="wrap">
-    <div class="ub-founders-grid">
-      <div class="ub-founders-copy reveal">
-        <p class="eyebrow plain ub-kicker">Founders</p>
-        <h2 class="h2">Two founders, <em>on every account.</em></h2>
-        <p class="lead">Different worlds, one table. The founders you meet on the first call lead the work, and stay on it.</p>
+    <header class="tm-heading center reveal">
+      <h2 class="tm-title"><span>Two founders,</span><em>on every account.</em></h2>
+      <p>Different worlds, one table. The founders you meet on the first call lead the work.</p>
+    </header>
+
+    <div class="tm-scroll-outer">
+      <div class="tm-scroll" aria-label="Founder profile cards">
+        <div class="tm-track" id="tm-track">
+          <svg class="tm-cord" aria-hidden="true" viewBox="0 0 976 50" preserveAspectRatio="none"><path d="M 0 13 Q 488 57 976 13" stroke="rgb(116,122,140)" stroke-width="1.25" stroke-linecap="round" fill="none"/></svg>
+
+          <!-- 01 · Himani -->
+          <div class="tm-enter" style="animation-delay:0ms;margin-top:2.79px">
+            <div class="tm-item" style="height:460px">
+              <div class="tm-pendulum" style="--rest:-1.8deg">
+                <div class="tm-anchor" aria-hidden="true"></div>
+                <div class="tm-wire" aria-hidden="true" style="height:71px"></div>
+                <div class="tm-hit" style="top:84px">
+                  <div class="tm-tilt">
+                    <div class="tm-eyelet" aria-hidden="true"><span></span></div>
+                    <div class="tm-flipper">
+                      <button type="button" class="tm-face tm-front" aria-label="View Himani Sharma's full profile" aria-expanded="false">
+                        <div class="tm-topline"><span>UNBOUND · Founder</span><span>#01</span></div>
+                        <div class="tm-portrait" style="background:#FFE3D9"><img src="assets/team/himani.jpg" alt="Himani Sharma" width="800" height="1000" loading="lazy" draggable="false" style="object-position:center 20%"></div>
+                        <div class="tm-info"><strong class="tm-name">Himani Sharma</strong><span class="tm-role">Co-founder</span></div>
+                        <div class="tm-bottomline"><span>View profile</span><span class="tm-arrow" aria-hidden="true">↗</span></div>
+                        <span class="tm-holo" aria-hidden="true"></span><span class="tm-gloss" aria-hidden="true"></span>
+                      </button>
+                      <div class="tm-face tm-back" aria-hidden="true">
+                        <div class="tm-back-heading"><span>Profile / 01</span><button class="tm-close" type="button" tabindex="-1" aria-label="Flip Himani Sharma's card back">↶</button></div>
+                        <div class="tm-back-main">
+                          <div class="tm-identity"><div class="tm-avatar" style="background:#FF4A1C"><img src="assets/team/himani.jpg" alt="Himani Sharma, UNBOUND" width="38" height="38" loading="lazy" draggable="false" style="object-position:center 20%"></div><div class="tm-intro"><b>Himani Sharma</b><span>Co-founder, UNBOUND</span></div></div>
+                          <div class="tm-location">⌖ &nbsp;India</div>
+                          <p class="tm-about">Brings one half of the story to every brief, and makes sure every channel tells it the same way.</p>
+                        </div>
+                        <div class="tm-back-section"><div class="tm-label">Leads</div><div class="tm-project"><span>Strategy / Positioning &amp; growth</span></div><div class="tm-project"><span>Social / Content &amp; creators</span></div><div class="tm-project"><span>On-ground / BTL &amp; events</span></div></div>
+                        <div class="tm-back-footer">
+                          <div class="tm-contact"><div class="tm-label">Let's connect</div><a href="mailto:hello@example.com?subject=UNBOUND%20%E2%80%94%20let%27s%20talk" class="tm-email" tabindex="-1" title="Email the founders">Email the founders</a><div class="tm-social"><a href="https://www.linkedin.com/in/himani-sharma-b821b1bb" target="_blank" rel="noopener" tabindex="-1" title="Himani Sharma on LinkedIn">LinkedIn ↗</a></div></div>
+                          <div class="tm-qr"><img src="assets/qr/himani.svg" alt="QR link to Himani Sharma's LinkedIn" width="64" height="64" loading="lazy"><span>Scan me</span></div>
+                        </div>
+                        <span class="tm-holo" aria-hidden="true"></span><span class="tm-gloss" aria-hidden="true"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 02 · Amisha -->
+          <div class="tm-enter" style="animation-delay:85ms;margin-top:2.79px">
+            <div class="tm-item" style="height:500px">
+              <div class="tm-pendulum" style="--rest:1.6deg">
+                <div class="tm-anchor" aria-hidden="true"></div>
+                <div class="tm-wire" aria-hidden="true" style="height:111px"></div>
+                <div class="tm-hit" style="top:124px">
+                  <div class="tm-tilt">
+                    <div class="tm-eyelet" aria-hidden="true"><span></span></div>
+                    <div class="tm-flipper">
+                      <button type="button" class="tm-face tm-front" aria-label="View Amisha Sethi's full profile" aria-expanded="false">
+                        <div class="tm-topline"><span>UNBOUND · Founder</span><span>#02</span></div>
+                        <div class="tm-portrait" style="background:#E6E0FF"><img src="assets/team/amisha.jpg" alt="Amisha Sethi" width="800" height="1000" loading="lazy" draggable="false" style="object-position:center 20%"></div>
+                        <div class="tm-info"><strong class="tm-name">Amisha Sethi</strong><span class="tm-role">Co-founder</span></div>
+                        <div class="tm-bottomline"><span>View profile</span><span class="tm-arrow" aria-hidden="true">↗</span></div>
+                        <span class="tm-holo" aria-hidden="true"></span><span class="tm-gloss" aria-hidden="true"></span>
+                      </button>
+                      <div class="tm-face tm-back" aria-hidden="true">
+                        <div class="tm-back-heading"><span>Profile / 02</span><button class="tm-close" type="button" tabindex="-1" aria-label="Flip Amisha Sethi's card back">↶</button></div>
+                        <div class="tm-back-main">
+                          <div class="tm-identity"><div class="tm-avatar" style="background:#4F2BF5"><img src="assets/team/amisha.jpg" alt="Amisha Sethi, UNBOUND" width="38" height="38" loading="lazy" draggable="false" style="object-position:center 20%"></div><div class="tm-intro"><b>Amisha Sethi</b><span>Co-founder, UNBOUND</span></div></div>
+                          <div class="tm-location">⌖ &nbsp;India</div>
+                          <p class="tm-about">Brings the other half of the story, and makes sure it lands where your audience is listening.</p>
+                        </div>
+                        <div class="tm-back-section"><div class="tm-label">Leads</div><div class="tm-project"><span>PR / Media &amp; reputation</span></div><div class="tm-project"><span>Brand / Communication &amp; voice</span></div><div class="tm-project"><span>Campaigns / ATL &amp; media</span></div></div>
+                        <div class="tm-back-footer">
+                          <div class="tm-contact"><div class="tm-label">Let's connect</div><a href="mailto:hello@example.com?subject=UNBOUND%20%E2%80%94%20let%27s%20talk" class="tm-email" tabindex="-1" title="Email the founders">Email the founders</a><div class="tm-social"><a href="https://www.linkedin.com/in/amishasethi/" target="_blank" rel="noopener" tabindex="-1" title="Amisha Sethi on LinkedIn">LinkedIn ↗</a></div></div>
+                          <div class="tm-qr"><img src="assets/qr/amisha.svg" alt="QR link to Amisha Sethi's LinkedIn" width="64" height="64" loading="lazy"><span>Scan me</span></div>
+                        </div>
+                        <span class="tm-holo" aria-hidden="true"></span><span class="tm-gloss" aria-hidden="true"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
-      <article class="ub-founder reveal" data-delay="1">
-        <div class="ub-portrait"><img src="assets/team/himani.jpg" alt="Himani Sharma" width="800" height="1000" loading="lazy"></div>
-        <div class="ub-founder-txt">
-          <h3>Himani Sharma</h3>
-          <p class="ub-founder-role">Co-founder · strategy, social and on-ground</p>
-          <p>Brings one half of the story to every brief, and makes sure every channel tells it the same way.</p>
-          <a class="ub-founder-link" href="https://www.linkedin.com/in/himani-sharma-b821b1bb" target="_blank" rel="noopener">LinkedIn <svg><use href="#i-arrow-ne"/></svg></a>
-        </div>
-      </article>
-      <article class="ub-founder reveal" data-delay="2">
-        <div class="ub-portrait"><img src="assets/team/amisha.jpg" alt="Amisha Sethi" width="800" height="1000" loading="lazy"></div>
-        <div class="ub-founder-txt">
-          <h3>Amisha Sethi</h3>
-          <p class="ub-founder-role">Co-founder · PR, brand and campaigns</p>
-          <p>Brings the other half, and makes sure it lands where your audience is listening.</p>
-          <a class="ub-founder-link" href="https://www.linkedin.com/in/amishasethi/" target="_blank" rel="noopener">LinkedIn <svg><use href="#i-arrow-ne"/></svg></a>
-        </div>
-      </article>
     </div>
+
+    <div class="tm-footnote center"><span>Tap a card to see more.</span></div>
   </div>
 </section>
 
@@ -785,7 +888,7 @@
         <p class="lead" style="margin-top:18px">A launch, a campaign, a story that isn't landing, or a brand that has outgrown its agencies. Tell us where you want to go, and we'll come back with a plan.</p>
       </div>
       <div class="actions">
-        <a class="btn btn-light btn-lg" href="#book" title="Book a call">Book a call <svg><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-light btn-lg ub-magnet" href="#book" title="Book a call">Book a call <svg><use href="#i-arrow"/></svg></a>
         <a class="btn btn-ghost btn-lg" href="mailto:hello@example.com?subject=UNBOUND%20%E2%80%94%20let%27s%20talk" title="Email us">Email us</a>
       </div>
     </div>
@@ -889,7 +992,7 @@
           <li><a href="#roles" title="Your team">Your team</a></li>
           <li><a href="#story" title="Our story">Our story</a></li>
           <li><a href="#usp" title="Why UNBOUND">Why UNBOUND</a></li>
-          <li><a href="#founders" title="Founders">Founders</a></li>
+          <li><a href="#team" title="Founders">Founders</a></li>
           <li><a href="#ways" title="Ways to work">Ways to work</a></li>
         </ul>
       </div>
@@ -912,6 +1015,7 @@
     </div>
     <div class="foot-bottom">
       <span>© 2026 UNBOUND. All rights reserved.</span>
+      <span class="lanebar" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       <a class="foot-hi" href="mailto:hello@example.com?subject=UNBOUND%20%E2%80%94%20let%27s%20talk" title="Say hi to the founders">Say hi to the founders</a>
     </div>
   </div>
