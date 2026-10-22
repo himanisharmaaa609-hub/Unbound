@@ -472,9 +472,10 @@
     var answers = [
       { id: 'thanks', re: /\b(thanks|thank you|bye|goodbye|cheers)\b/i, text: 'Thanks for stopping by. If you would like to talk it through, pick a time below.', actions: [['Book a call', '#book', true]] },
       { id: 'hi', re: /\b(hi|hello|hey|yo|namaste)\b/i, text: 'Hi. Ask about what we do, how we work, the founders, or pick a time below.', actions: [['See services', '#services'], ['Book a call', '#book', true]] },
-      { id: 'why', re: /\b(why (you|unbound|should|choose|hire|pick)|different|difference|unique|usp|stand out|better than|agency|agencies|freelancer\w*|in-house)\b/i, text: 'Most brands juggle a PR firm, a social shop, a media agency and an events vendor, each with its own brief. UNBOUND runs all of it from one story, one plan and one founder-led team, so every channel says the same thing.', actions: [['Why UNBOUND', '#usp'], ['Book a call', '#book', true]] },
-      { id: 'services', re: /\b(what do you do|services?|offer|offerings|capabilit\w*|do you do|help (me|us) with|everything you do|what can you)\b/i, text: 'Everything a brand needs to be seen and talked about: PR and reputation, growth strategy, social media, ATL campaigns, BTL activations and events. One team, one plan.', actions: [['See services', '#services']] },
-      { id: 'pricing', re: /\b(price|pricing|cost|budget|fee|retainer|how much|rates?)\b/i, text: 'Two ways in: a monthly partnership, or a fixed-scope project such as a launch or a campaign. The price comes with your written plan, within three working days of a call.', actions: [['Ways to work with us', '#ways'], ['Book a call', '#book', true]] },
+      { id: 'roles', re: /\b(outsourc\w*|marketing team|marketing department|cmo|brand manager|product market\w*|pmm|roles?|department|hire a team|hiring)\b/i, text: 'You can outsource your entire marketing department to us: a fractional CMO, a brand manager, a product marketing manager, a PR manager, a social media manager, a content strategist, a creative director, a performance marketer, a media planner and an events manager. One retainer, led by the founders, from week one.', actions: [['Meet your team', '#roles'], ['Book a call', '#book', true]] },
+      { id: 'why', re: /\b(why (you|unbound|should|choose|hire|pick)|different|difference|unique|usp|stand out|better than|agency|agencies|freelancer\w*|in-house)\b/i, text: 'Building a marketing team in-house takes months and ten salaries, and most brands still add a PR firm, a social shop and an events vendor on top. UNBOUND gives you the whole department on one retainer, led by the founders, so every channel says the same thing.', actions: [['Why UNBOUND', '#usp'], ['Book a call', '#book', true]] },
+      { id: 'services', re: /\b(what do you do|services?|offer|offerings|capabilit\w*|do you do|help (me|us) with|everything you do|what can you)\b/i, text: 'We are your whole marketing team: strategy, brand, product marketing, PR, social media, content, creative, performance marketing, ATL media, BTL activations and events. One team, one plan, one retainer.', actions: [['Meet your team', '#roles'], ['See services', '#services']] },
+      { id: 'pricing', re: /\b(price|pricing|cost|budget|fee|retainer|how much|rates?)\b/i, text: 'Two ways in: your whole marketing team on a monthly retainer, or a fixed-scope project such as a launch or a campaign. The price comes with your written plan, within three working days of a call.', actions: [['Ways to work with us', '#ways'], ['Book a call', '#book', true]] },
       { id: 'timeline', re: /\b(how long|how soon|how quickly|how fast|timeline|time ?frame|turnaround|see results)\b/i, text: 'Within three working days of a call you get a written plan and the price. Once we start: a weekly update, a review every two weeks and a full report every month.', actions: [['How we start', '#process'], ['Book a call', '#book', true]] },
       { id: 'team', re: /\b(team|who|people|founders?|himani|amisha)\b/i, text: 'UNBOUND was founded by Himani Sharma and Amisha Sethi. The founders lead every account themselves.', actions: [['Our story', '#story'], ['Meet the founders', '#team']] },
       { id: 'pr', re: /\b(pr|press|media|reputation|crisis|journalist|coverage|thought leadership)\b/i, text: 'PR and reputation: media relations, founder and executive profiling, launches, crisis communication and reputation management.', actions: [['See services', '#services']] },
@@ -526,6 +527,189 @@
         try { rec.start(); } catch (err) { listening = false; }
       });
     }
+
+    /* ---- voice mode: a hands-free conversation ----
+       Listens with the browser's speech recognition, answers from the same replies as the text chat,
+       and speaks them with pre-rendered neural voice clips (assets/voice/<id>.mp3, Kokoro, Apache-2.0).
+       The orb follows the microphone while you talk and the voice while it answers. */
+    (function () {
+    var VOICE = {"greet": ["Hi, I'm the voice of UNBOUND. Ask me what we do, who's on your team, how we work, or how to get started.", "Hello, and welcome to UNBOUND. I can tell you about the marketing team you'd get, our founders, our pricing, or how to book a call. What would you like to know?", "Hi there. I'm here to answer questions about UNBOUND. Try asking what we do, or which roles come with your team."], "hi": ["Hi there. Ask me about your outsourced marketing team, our services, the founders, or book a time below.", "Hello again. Ask me anything about how we work, who's on the team, or how to get started.", "Hey. You can ask what we do, what makes us different, or how to book a call with the founders."], "thanks": ["Thanks for stopping by. If you'd like to talk it through, pick a time below and you'll meet both founders.", "You're welcome. Whenever you're ready, the calendar below books a free half hour with Himani and Amisha.", "Happy to help. Book a call below any time, and we'll come prepared."], "roles": ["You can outsource your entire marketing department to us. That's a fractional chief marketing officer, a brand manager, a product marketing manager, a PR manager, a social media manager, a content strategist, a creative director, a performance marketer, a media planner and an events manager. One retainer, led by the founders.", "Think of us as your marketing department, already hired. Strategy, brand, product marketing, PR, social, content, creative, performance, media buying and events, all on one team, working from week one.", "Instead of hiring ten people over several months, you bring in one team. Every role, from a fractional chief marketing officer to an events manager, on one retainer that scales up or down."], "why": ["Building a marketing team in-house takes months and ten salaries, and most brands still pay a PR firm, a social shop and an events vendor on top. We give you the whole department on one retainer, led by the founders, so every channel tells the same story.", "Three things. You get a full senior team from week one. The founders lead your account themselves. And because one team runs every channel, your brand says the same thing everywhere.", "Most brands juggle specialists and agencies, each with its own brief. With UNBOUND there's one team, one brief and one story, and you can scale it up for a launch and back down after."], "services": ["We're your whole marketing team. Strategy, brand, product marketing, PR, social media, content, creative, performance marketing, above-the-line media, below-the-line activations and events. One team, one plan.", "Everything a marketing department does. We plan it, we make it, we buy the media, we run the events, and we report on what moved.", "In short, everything that gets a brand seen and chosen. PR and reputation, growth strategy, social media, campaigns on TV, print and outdoor, on-ground activations, and events."], "pricing": ["There are two ways in. Your whole marketing team on a monthly retainer, or a fixed-scope project like a launch or a campaign. The price comes with your written plan, within three working days of a call.", "It depends on the size of the team you need. After a free call, you get a written plan with the price within three working days.", "You pay one monthly retainer instead of ten salaries and several agency fees. We'll quote it in your written plan after the first call."], "timeline": ["Within three working days of a call, you get a written plan and the price. Once we start, you get a weekly update, a review every two weeks, and a full report every month.", "Fast. A written plan within three working days of the call, and the team starts in week one.", "There's no hiring to wait for. Plan in three working days, kickoff in week one, and a full report every month."], "team": ["UNBOUND was founded by Himani Sharma and Amisha Sethi. They come from very different worlds, and they lead every account themselves.", "Two founders, Himani and Amisha, and a team behind them for every marketing role. The founders you meet on the first call lead the work.", "Himani Sharma and Amisha Sethi. Scroll to the founders section to see their cards, or read how the agency started in our story."], "pr": ["PR and reputation. Media relations, founder profiling, launches, crisis communication and reputation management.", "We get your brand into the stories your customers, investors and future hires read, and we keep your name in good shape when it matters.", "Press, profiles and a steady hand. Pitches to the right journalists, interviews and bylines for your leaders, and a crisis plan before you need one."], "growth": ["Growth strategy. Positioning, go-to-market plans, audience insight, and one channel plan that ties every activity to the number you need to move.", "We start with where you want the business to go, then build one plan across PR, social, campaigns and events to get there.", "A plan with a target. Who you're for, what you stand for, and which channels move the number, reviewed every month."], "social": ["Social media. Strategy, content and reels, community management, creators and influencers, and paid social.", "We run your channels every day, in one voice, from the content calendar to replying to comments.", "A feed people stop scrolling for. Content made for each platform, creators who fit the brand, and paid budget behind what works."], "atl": ["Above-the-line campaigns. A big idea, film, print, radio and outdoor, with media planned and bought to reach the most of the right people.", "We take one idea to the biggest screens and streets: television, newspapers, radio and hoardings, planned and bought together.", "Big campaigns, done properly. Creative, production and media buying, all on one team."], "btl": ["Below-the-line activations. Mall and campus programmes, retail and in-store, sampling, experiential pop-ups and trade marketing.", "We put your product in people's hands, face to face, and capture the leads for your sales team.", "On the ground, on the story. Activations, sampling and retail programmes that travel city to city."], "events": ["Events. Product launches, conferences, brand experiences, executive dinners and exhibitions, from concept to follow-up.", "We plan the night, fill the room, bring the press, and keep the content working long after.", "Launches and stages people talk about the next morning, with PR and social built in from day one."], "start": ["Book a thirty-minute call with the founders and tell us what you want people to say about your brand. Within three working days you get a written plan and what it would cost.", "Start with the free brand session below. Then outsource the whole team, or bring us in for one campaign.", "Pick a time in the calendar below. It's free, and useful even if we never work together."], "book": ["Pick a time below. It opens Google Calendar with the UNBOUND founders invited.", "The calendar is just below. Choose a weekday and a time, and the invite goes to both founders.", "Scroll down to the calendar, pick a slot, and you're booked with Himani and Amisha."], "where": ["We're based in India and work with brands anywhere. Call times are shown in your timezone in the booking calendar.", "India, and wherever you are. The calendar shows every slot in your own timezone.", "We're based in India and work remotely with brands in other countries too."], "noheard": ["Sorry, I didn't catch that. Tap the orb and try again, or pick one of the questions below.", "I couldn't hear you clearly. Tap the orb to try again, or choose a question.", "I missed that. Try once more, or tap one of the suggested questions."], "unknown": ["Good question. The quickest way to a real answer is to send it to the founders, or pick a time below and we'll come prepared.", "I don't have a ready answer for that one. Email it to the team, or book a call and ask the founders directly.", "That's one for the founders. Book a call below, or send them a note, and they'll get back to you."]};
+    var vc = $('#talk-vc'), vBtn = $('#talk-voice');
+    if (vc && vBtn) {
+      var vBase = (function () { var s = $('script[src*="js/site.js"]'); return s ? s.src.replace(/js\/site\.js.*$/, 'assets/voice/') : 'assets/voice/'; })();
+      var vStatus = $('[data-tv-status]', vc), vYou = $('[data-tv-you]', vc), vSay = $('[data-tv-say]', vc), vActs = $('[data-tv-actions]', vc), vSug = $('[data-tv-suggest]', vc);
+      var vMute = $('[data-tv-mute]', vc), canvas = $('.tv-orb', vc), ctx = canvas.getContext('2d');
+      var STATUS = { connecting: 'Connecting…', listening: 'Listening…', thinking: 'Thinking…', speaking: 'Speaking. Tap the orb to interrupt', paused: 'Tap the orb to talk', muted: 'Mic off. Tap a question', blocked: 'Microphone blocked. Tap a question', unsupported: 'Tap a question to hear the answer' };
+      var vOpen = false, actx = null, micAn = null, outAn = null, micStream = null, audioEl = null, rec = null, muted = false, misses = 0, words = [], wordEnds = [], level = 0, frame = 0, demo = false, synthTimer = null;
+      var setState = function (s) { vc.setAttribute('data-state', s); vStatus.textContent = STATUS[s] || ''; };
+
+      // ---- orb ----
+      var S = 220, dpr = Math.min(2, window.devicePixelRatio || 1);
+      var sizeOrb = function () { S = canvas.clientWidth || 220; canvas.width = S * dpr; canvas.height = S * dpr; };
+      var buf = null;
+      var rms = function (an) { if (!an) return 0; if (!buf || buf.length !== an.fftSize) buf = new Uint8Array(an.fftSize); an.getByteTimeDomainData(buf); var s = 0; for (var i = 0; i < buf.length; i++) { var v = (buf[i] - 128) / 128; s += v * v; } return Math.min(1, Math.sqrt(s / buf.length) * 4.2); };
+      var BLOBS = [['79,43,245', 0, .55], ['255,74,28', 2.1, .5], ['255,194,58', 4.2, .46], ['45,212,167', 1.1, .42]];
+      var path = function (c, R, t, amp) { ctx.beginPath(); for (var k = 0; k <= 96; k++) { var a = k / 96 * Math.PI * 2; var r = R * (1 + 0.035 * Math.sin(a * 3 + t * 1.1) + amp * 0.09 * Math.sin(a * 5 - t * 2.6) + amp * 0.05 * Math.sin(a * 8 + t * 3.4)); var x = c + Math.cos(a) * r, y = c + Math.sin(a) * r; if (k) ctx.lineTo(x, y); else ctx.moveTo(x, y); } ctx.closePath(); };
+      var draw = function (ms) {
+        if (!vOpen) return;
+        var t = ms / 1000, st = vc.getAttribute('data-state');
+        var target = st === 'listening' ? rms(micAn) : st === 'speaking' ? (outAn ? rms(outAn) : 0.35 + 0.25 * Math.sin(t * 9) * Math.sin(t * 3.3)) : st === 'thinking' ? 0.22 + 0.08 * Math.sin(t * 6) : 0.04;
+        if (demo) target = 0.3 + 0.25 * Math.abs(Math.sin(t * 4.1) * Math.sin(t * 1.7));
+        level += (target - level) * (target > level ? 0.35 : 0.12);
+        var spin = st === 'thinking' ? 2.4 : st === 'speaking' ? 1.4 : 0.6;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, S, S);
+        var c = S / 2, R = S * 0.3 * (1 + level * 0.16);
+        var halo = ctx.createRadialGradient(c, c, R * 0.7, c, c, R * 1.65);
+        halo.addColorStop(0, 'rgba(79,43,245,' + (0.16 + level * 0.3).toFixed(3) + ')'); halo.addColorStop(0.55, 'rgba(255,74,28,' + (0.05 + level * 0.1).toFixed(3) + ')'); halo.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = halo; ctx.fillRect(0, 0, S, S);
+        if (st === 'listening') { for (var q = 0; q < 2; q++) { var p = ((t * 0.7 + q * 0.5) % 1); ctx.beginPath(); ctx.arc(c, c, R * (1.05 + p * 0.55), 0, Math.PI * 2); ctx.strokeStyle = 'rgba(79,43,245,' + ((1 - p) * 0.35).toFixed(3) + ')'; ctx.lineWidth = 1.5; ctx.stroke(); } }
+        ctx.save(); path(c, R, t, level); ctx.clip();
+        var base = ctx.createLinearGradient(0, c - R, 0, c + R); base.addColorStop(0, '#FFFFFF'); base.addColorStop(1, '#F2EFFF'); ctx.fillStyle = base; ctx.fillRect(0, 0, S, S);
+        ctx.filter = 'blur(' + Math.round(S * 0.07) + 'px)';
+        BLOBS.forEach(function (b, i) {
+          var a = t * spin * (0.5 + i * 0.13) + b[1];
+          var x = c + Math.cos(a) * R * 0.48, y = c + Math.sin(a * 1.3) * R * 0.44, r = R * (b[2] + 0.1 * Math.sin(t * 1.3 + i) + level * 0.28);
+          ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fillStyle = 'rgba(' + b[0] + ',.82)'; ctx.fill();
+        });
+        ctx.filter = 'none';
+        var gl = ctx.createRadialGradient(c - R * 0.35, c - R * 0.42, 0, c - R * 0.35, c - R * 0.42, R * 0.9); gl.addColorStop(0, 'rgba(255,255,255,.85)'); gl.addColorStop(1, 'rgba(255,255,255,0)'); ctx.fillStyle = gl; ctx.fillRect(0, 0, S, S);
+        ctx.restore();
+        path(c, R, t, level); ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 1.5; ctx.stroke();
+        // captions follow the voice
+        if (st === 'speaking' && audioEl && !audioEl.paused && audioEl.duration) markWords(audioEl.currentTime / audioEl.duration);
+        frame = requestAnimationFrame(draw);
+      };
+
+      // ---- captions ----
+      var setCaption = function (text) {
+        var parts = text.split(/\s+/), total = 0;
+        wordEnds = parts.map(function (w) { total += w.length + 2 + (/[.,;:?!]$/.test(w) ? 5 : 0); return total; }).map(function (x) { return x / total; });
+        vSay.innerHTML = parts.map(function (w) { return '<span class="w">' + esc(w) + '</span>'; }).join(' ');
+        words = $$('.w', vSay);
+      };
+      var markWords = function (p) { for (var i = 0; i < words.length; i++) words[i].classList.toggle('on', (i ? wordEnds[i - 1] : 0) <= p + 0.015); };
+
+      // ---- voice out ----
+      var bestVoice = function () {
+        var vs = (window.speechSynthesis ? speechSynthesis.getVoices() : []).filter(function (v) { return /^en/i.test(v.lang); });
+        var sc = function (v) { return (/natural|neural|online/i.test(v.name) ? 20 : 0) + (/premium|enhanced/i.test(v.name) ? 14 : 0) + (/google/i.test(v.name) ? 8 : 0) + (/ava|aria|jenny|emma|libby|sonia|samantha/i.test(v.name) ? 4 : 0) + (/en-(us|gb)/i.test(v.lang) ? 1 : 0); };
+        return vs.sort(function (a, b) { return sc(b) - sc(a); })[0] || null;
+      };
+      var stopVoice = function () { if (audioEl) { audioEl.onended = audioEl.onerror = null; audioEl.pause(); } if (window.speechSynthesis) speechSynthesis.cancel(); clearInterval(synthTimer); };
+      var speak = function (id, text, done) {
+        stopVoice(); setCaption(text); setState('speaking');
+        var finished = false, end = function () { if (finished) return; finished = true; markWords(1); if (done) done(); };
+        var fallback = function () {
+          if (!window.speechSynthesis) { setTimeout(end, 400 + text.length * 55); return; }
+          var u = new SpeechSynthesisUtterance(text), v = bestVoice(); if (v) u.voice = v; u.rate = 1.02; u.pitch = 1;
+          var t0 = Date.now(), est = text.length * 62; clearInterval(synthTimer);
+          synthTimer = setInterval(function () { markWords(Math.min(1, (Date.now() - t0) / est)); }, 80);
+          u.onend = function () { clearInterval(synthTimer); end(); }; u.onerror = function () { clearInterval(synthTimer); end(); };
+          speechSynthesis.speak(u);
+        };
+        audioEl.onended = end; audioEl.onerror = function () { audioEl.onerror = null; fallback(); };
+        audioEl.src = vBase + id + '.mp3?v=ub1';
+        var pr = audioEl.play(); if (pr && pr.catch) pr.catch(function () { audioEl.onerror = null; fallback(); });
+      };
+
+      // ---- voice in ----
+      var listen = function () {
+        if (!vOpen || demo) return;
+        if (!SR) { setState('unsupported'); return; }
+        if (muted) { setState('muted'); return; }
+        try { if (rec) rec.abort(); } catch (e) {}
+        rec = new SR(); rec.lang = /^en/i.test(navigator.language || '') ? navigator.language : 'en-US'; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
+        var got = false;
+        rec.onstart = function () { setState('listening'); };
+        rec.onresult = function (ev) {
+          var s = '', fin = false; for (var i = 0; i < ev.results.length; i++) { s += ev.results[i][0].transcript; if (ev.results[i].isFinal) fin = true; }
+          vYou.textContent = '“' + s.trim() + '”';
+          if (fin && !got) { got = true; try { rec.stop(); } catch (e) {} handle(s); }
+        };
+        rec.onerror = function (ev) { if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') { got = true; setState('blocked'); } };
+        rec.onend = function () {
+          if (got || !vOpen) return;
+          misses++;
+          if (misses < 3) setTimeout(listen, 150);
+          else { misses = 0; speakLine('noheard', function () { setState('paused'); }); }
+        };
+        try { rec.start(); } catch (e) { setState('paused'); }
+      };
+      // every answer has a few phrasings; asking again moves to the next one, so it never repeats word for word
+      var turns = {};
+      try { turns = JSON.parse(localStorage.getItem('ub-voice-turns') || '{}') || {}; } catch (e) {}
+      var pickLine = function (id, fallback) {
+        var list = VOICE[id]; if (!list) return { file: null, text: fallback };
+        list = [].concat(list);
+        var n = turns[id] || 0, i = n % list.length;
+        turns[id] = n + 1; try { localStorage.setItem('ub-voice-turns', JSON.stringify(turns)); } catch (e) {}
+        return { file: id + (i ? '-' + (i + 1) : ''), text: list[i] };
+      };
+      var speakLine = function (id, done) { var l = pickLine(id); speak(l.file, l.text, done); };
+      var handle = function (q) {
+        q = String(q || '').trim(); if (!q) return;
+        misses = 0; vYou.textContent = '“' + q + '”'; vActs.innerHTML = ''; vSug.hidden = true; setState('thinking');
+        var a = reply(q), id = a.id || 'unknown', line = pickLine(id, a.text);
+        // the text chat keeps the same transcript, in the words that were spoken
+        tSuggest.hidden = true; tAdd('user', esc(q));
+        tAdd('bot', esc(line.text) + '<div class="talk-actions">' + a.actions.map(function (x) { return tChip(x[0], x[1], x[2], x[3]); }).join('') + '</div>');
+        setTimeout(function () {
+          if (!vOpen) return;
+          vActs.innerHTML = a.actions.map(function (x) { return tChip(x[0], x[1], x[2], x[3]); }).join('');
+          speak(line.file || 'none', line.text, function () { if (vOpen) setTimeout(listen, 250); });
+        }, prefersReduced ? 0 : 420);
+      };
+
+      // ---- open / close ----
+      var openVoice = function () {
+        if (vOpen) return;
+        vOpen = true; demo = /[?&]voice=demo/.test(location.search); closeSheet();
+        talk.classList.add('is-voice'); vc.hidden = false; sizeOrb();
+        vYou.textContent = ''; vActs.innerHTML = ''; vSug.hidden = false; setState('connecting');
+        if (!audioEl) { audioEl = new Audio(); audioEl.preload = 'auto'; audioEl.crossOrigin = 'anonymous'; }
+        try {
+          var AC = window.AudioContext || window.webkitAudioContext;
+          if (AC && !actx) { actx = new AC(); outAn = actx.createAnalyser(); outAn.fftSize = 1024; actx.createMediaElementSource(audioEl).connect(outAn); outAn.connect(actx.destination); }
+          if (actx && actx.state === 'suspended') actx.resume();
+        } catch (e) { outAn = null; }
+        cancelAnimationFrame(frame); frame = requestAnimationFrame(draw);
+        if (demo) { setCaption(VOICE.services[0]); markWords(0.55); vYou.textContent = '“What do you do?”'; vSug.hidden = true; vActs.innerHTML = tChip('See services', '#services') + tChip('Book a call', '#book', true); setState('speaking'); return; }
+        speakLine('greet', function () { if (vOpen) listen(); });   // starts inside the click, so mobile browsers allow the audio
+        if (SR && navigator.mediaDevices && navigator.mediaDevices.getUserMedia && actx) {
+          navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } }).then(function (s) {
+            if (!vOpen) { s.getTracks().forEach(function (k) { k.stop(); }); return; }
+            micStream = s; micAn = actx.createAnalyser(); micAn.fftSize = 1024; actx.createMediaStreamSource(s).connect(micAn);
+          }).catch(function () { micAn = null; });
+        }
+      };
+      var closeVoice = function () {
+        if (!vOpen) return;
+        vOpen = false; stopVoice();
+        try { if (rec) { rec.onend = null; rec.abort(); } } catch (e) {}
+        if (micStream) { micStream.getTracks().forEach(function (k) { k.stop(); }); micStream = null; micAn = null; }
+        cancelAnimationFrame(frame); vc.hidden = true; talk.classList.remove('is-voice');
+      };
+      vBtn.addEventListener('click', openVoice);
+      $$('[data-tv-end]', vc).forEach(function (b) { b.addEventListener('click', closeVoice); });
+      $('[data-tv-text]', vc).addEventListener('click', function () { closeVoice(); openSheet(); tInput.focus(); });
+      $('[data-tv-orb]', vc).addEventListener('click', function () {
+        var st = vc.getAttribute('data-state');
+        if (st === 'speaking' || st === 'connecting') { stopVoice(); listen(); }
+        else if (st === 'listening') { try { rec.stop(); } catch (e) {} }
+        else listen();
+      });
+      vMute.addEventListener('click', function () {
+        muted = !muted; vMute.setAttribute('aria-pressed', String(muted)); vMute.classList.toggle('is-on', muted);
+        if (muted) { try { if (rec) { rec.onend = null; rec.abort(); } } catch (e) {} if (vc.getAttribute('data-state') === 'listening') setState('muted'); }
+        else if (vc.getAttribute('data-state') !== 'speaking') listen();
+      });
+      $$('[data-tv-ask]', vc).forEach(function (b) { b.addEventListener('click', function () { try { if (rec) { rec.onend = null; rec.abort(); } } catch (e) {} stopVoice(); handle(b.getAttribute('data-tv-ask')); }); });
+      vActs.addEventListener('click', function (e) { var a = e.target.closest('a'); if (a && a.getAttribute('href').charAt(0) === '#') closeVoice(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && vOpen) closeVoice(); });
+      window.addEventListener('resize', function () { if (vOpen) sizeOrb(); });
+      if (/[?&]voice=(1|demo)/.test(location.search)) setTimeout(openVoice, 300);
+    }
+    })();
 
     // ?talk=<question> opens the sheet with that question (screenshots, QA)
     var tq = /[?&]talk=([^&]+)/.exec(location.search);

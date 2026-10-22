@@ -22,14 +22,23 @@ Useful switches for testing:
 
 ## Files
 
-- `index.html`: the homepage (hero, story, what we do, services, why UNBOUND, manifesto, founders, process, booking, footer)
+- `index.html`: the homepage (hero, roles strip, your team, story, what we do, services, why UNBOUND, manifesto, founders, process, booking, footer)
 - `contact/index.html`: contact page with a message form
 - `css/site.css`: the base design system (grid, type, buttons, cards, founder cards, calendar)
 - `css/unbound.css`: UNBOUND palette and the new sections and motion
-- `js/site.js`: nav, tabs, reveal-on-scroll, hanging founder cards, booking calendar, chat bar, forms
+- `js/site.js`: nav, tabs, reveal-on-scroll, hanging founder cards, booking calendar, chat bar and voice agent, forms
 - `js/unbound.js`: headline and word rotator, scroll-drawn story paths, compare toggle, manifesto highlight, scroll progress, magnetic buttons
 - `assets/team/`: founder portraits (`himani.jpg`, `amisha.jpg`)
 - `assets/qr/`: QR codes for each founder's LinkedIn
+- `assets/voice/`: the voice agent's spoken answers, three phrasings per answer (`<id>.mp3`, `<id>-2.mp3`, `<id>-3.mp3`)
+
+## Chat and voice agent
+
+The Talk bar at the bottom answers common questions in text; the Voice button opens a hands-free conversation. Neither needs a backend.
+
+- The answers and the questions they match are the `answers` list in the Talk block of `js/site.js`.
+- The voice listens with the browser's own speech recognition (Chrome, Edge, Safari) and speaks with pre-recorded clips in `assets/voice/`, made with the open-source Kokoro voice (`af_heart`). The spoken wording is the `VOICE` object in the same file. If a clip is missing, the browser's built-in voice reads the text instead, so you can edit a line and it still speaks.
+- `?voice=demo` opens the voice panel in a frozen demo state for screenshots.
 
 ## Palette
 
