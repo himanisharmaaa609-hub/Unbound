@@ -276,7 +276,7 @@
 .ub-seats .lm-track{animation-duration:52s}
 
 /* ---------- your team: role cards ---------- */
-.ub-role-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.ub-role-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .ub-role{position:relative;display:flex;flex-direction:column;gap:10px;padding:22px 20px 20px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s var(--ease),background .45s}
 .ub-role::before{content:"";position:absolute;inset:auto -30% -55% auto;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,var(--glow,rgba(255,74,28,.22)),transparent 65%);opacity:0;transition:opacity .5s var(--ease)}
 .ub-role[data-tone="g"]{--glow:rgba(79,43,245,.2)}.ub-role[data-tone="s"]{--glow:rgba(45,212,167,.24)}.ub-role[data-tone="r"]{--glow:rgba(255,194,58,.3)}
@@ -292,7 +292,6 @@
 .ub-role li{font-size:12.5px;color:var(--mute);display:flex;gap:7px;align-items:baseline}
 .ub-role li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--d);flex:none;transform:translateY(-1px)}
 .ub-role[data-tone="g"] li::before{background:var(--violet)}.ub-role[data-tone="s"] li::before{background:var(--mint)}.ub-role[data-tone="r"] li::before{background:var(--saffron)}
-.reveal[data-delay="4"]{transition-delay:.32s}
 @media (max-width:1180px){.ub-role-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:760px){.ub-role-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:460px){.ub-role-grid{gap:10px}.ub-role{padding:16px 14px}.ub-role p{display:none}.ub-role h3{font-size:15.5px}.ub-role li{font-size:12px}}
