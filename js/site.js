@@ -611,7 +611,7 @@
           speechSynthesis.speak(u);
         };
         audioEl.onended = end; audioEl.onerror = function () { audioEl.onerror = null; fallback(); };
-        audioEl.src = vBase + id + '.mp3?v=ub1';
+        audioEl.src = vBase + id + '.mp3?v=ub5';
         var pr = audioEl.play(); if (pr && pr.catch) pr.catch(function () { audioEl.onerror = null; fallback(); });
       };
 
