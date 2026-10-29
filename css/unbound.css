@@ -376,3 +376,19 @@
 .ub-svcs .svc:nth-child(1){transition-delay:0s}.ub-svcs .svc:nth-child(2){transition-delay:.07s}.ub-svcs .svc:nth-child(3){transition-delay:.14s}.ub-svcs .svc:nth-child(4){transition-delay:.21s}.ub-svcs .svc:nth-child(5){transition-delay:.1s}.ub-svcs .svc:nth-child(6){transition-delay:.17s}.ub-svcs .svc:nth-child(7){transition-delay:.24s}.ub-svcs .svc:nth-child(8){transition-delay:.31s}
 @media (max-width:1180px){.ub-svcs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.ub-svcs{grid-template-columns:1fr}}
+
+/* ---------- deliverables: four files, no product frame ---------- */
+.ub-deliv-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.ub-file{position:relative;display:grid;grid-template-rows:auto 1fr;background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;transition:transform .55s var(--ease),box-shadow .55s var(--ease)}
+.ub-file:hover{transform:translateY(-6px);box-shadow:0 40px 70px -40px rgba(10,10,11,.35)}
+.ub-file[data-tone="r"]{--acc:#F2A900;--acc-soft:#FFF0C7}.ub-file[data-tone="d"]{--acc:var(--flame);--acc-soft:#FFE3D9}.ub-file[data-tone="g"]{--acc:var(--violet);--acc-soft:#E6E0FF}.ub-file[data-tone="s"]{--acc:#14B88A;--acc-soft:#D5F7EC}
+.ub-file-shot{position:relative;padding:26px 0 0 26px;background:linear-gradient(160deg,var(--acc-soft),#F6F6F4 70%);overflow:hidden;aspect-ratio:16/9}
+.ub-file-shot img{display:block;width:100%;height:auto;border-radius:10px 0 0 0;border:1px solid rgba(10,10,11,.08);border-right:0;border-bottom:0;box-shadow:0 30px 50px -30px rgba(10,10,11,.4);transform:translateY(0);transition:transform .9s var(--ease)}
+.ub-file:hover .ub-file-shot img{transform:translate(-6px,-6px)}
+.ub-file-txt{padding:20px 24px 24px;display:grid;gap:8px;align-content:start}
+.ub-file-k{display:inline-flex;align-items:center;gap:7px;justify-self:start;font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);background:var(--acc-soft);padding:5px 10px;border-radius:999px}
+.ub-file-k svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ub-file h3{font-size:22px;letter-spacing:-.025em;margin-top:4px}
+.ub-file p{font-size:14.5px;line-height:1.55;color:var(--ink-2);max-width:48ch}
+.ub-deliv-note{margin-top:16px;font-size:12.5px;color:var(--mute);text-align:center}
+@media (max-width:860px){.ub-deliv-grid{grid-template-columns:1fr}.ub-file-shot{padding:18px 0 0 18px}}
