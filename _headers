@@ -1,0 +1,14 @@
+# Cloudflare Pages response headers.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), geolocation=(), microphone=(self)
+
+# CSS, JS and audio carry ?v= cache tags, so browsers can keep them for a week.
+/css/*
+  Cache-Control: public, max-age=604800
+/js/*
+  Cache-Control: public, max-age=604800
+/assets/*
+  Cache-Control: public, max-age=604800

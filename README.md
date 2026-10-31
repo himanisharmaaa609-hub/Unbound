@@ -62,4 +62,15 @@ Tokens live at the top of `css/site.css` (`--flame`, `--violet`, `--saffron`, `-
 2. **Email address.** Every "Email us" link and booking invite uses `hello@example.com`. Search and replace it in `index.html`, `contact/index.html` and `js/site.js` (`SITE.emails`).
 3. **Forms.** The subscribe and contact forms need somewhere to send to. Put an inbox in `formTo` in `js/site.js` to use FormSubmit (formsubmit.co sends a one-time activation email the first time), or a web app URL in `leadUrl`. With both empty, the forms offer to open the visitor's own email app instead.
 4. **Booking link.** The calendar works without a backend: it opens a Google Calendar invite to the founders. To use Cal.com or Calendly instead, paste the link into `bookingUrl` in `js/site.js`.
-5. **Founder profiles.** Both full profiles live in `team/index.html` (sections `#himani` and `#amisha`); the shorter versions are on the backs of the homepage cards (`.tm-back` in `index.html`). Event photos sit in `assets/team/himani/` and `assets/team/amisha/`.
+5. **Founder profiles.** Both full profiles live in `team/index.html` (sections `#amisha` and `#himani`); the shorter versions are on the backs of the homepage cards (`.tm-back` in `index.html`). Event photos sit in `assets/team/himani/` and `assets/team/amisha/`.
+
+## Hosting on Cloudflare
+
+The site is plain HTML with no build step, so Cloudflare Pages serves the repository as it is. No links point at a fixed domain, so it works on any domain.
+
+1. **Buy the domain.** In the Cloudflare dashboard, open Domain Registration, then Register Domains. Cloudflare charges the registry's price with no markup. The domain's DNS is set up on Cloudflare automatically.
+2. **Create the Pages project.** Open Workers & Pages, then Create, then Pages, then Connect to Git. Pick this repository and the `main` branch. Leave the framework preset as None, the build command empty, and the output directory as `/`.
+3. **Attach the domain.** In the project, open Custom domains and add the domain, and the `www.` version too. Cloudflare creates the DNS records and the SSL certificate.
+4. **Turn off GitHub Pages** once the new domain works, in the repository's Settings, then Pages, so the site is not served in two places.
+
+Every push to `main` deploys again on its own. `_headers` sets security headers and browser caching. `404.html` is used as the not-found page.
