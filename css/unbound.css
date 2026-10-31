@@ -438,3 +438,5 @@
 .ubt-cta{padding-top:clamp(48px,6vw,80px)!important}
 @media (max-width:900px){.ubt-grid{grid-template-columns:1fr}.ubt-portrait{position:static;max-width:440px}.ubt-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.ubt-stats{grid-template-columns:1fr}.ubt-facts div{grid-template-columns:1fr;gap:4px}.ubt-more{margin:8px 0 0}}
+.ubt-tiles-2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:720px}
+@media (max-width:900px){.ubt-tiles-2{grid-template-columns:repeat(2,minmax(0,1fr))}}
