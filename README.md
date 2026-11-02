@@ -68,9 +68,9 @@ Tokens live at the top of `css/site.css` (`--flame`, `--violet`, `--saffron`, `-
 
 The site is plain HTML with no build step, so Cloudflare Pages serves the repository as it is. No links point at a fixed domain, so it works on any domain.
 
-1. **Buy the domain.** In the Cloudflare dashboard, open Domain Registration, then Register Domains. Cloudflare charges the registry's price with no markup. The domain's DNS is set up on Cloudflare automatically.
+1. **Point weunbound.com at Cloudflare.** The domain is registered at GoDaddy. In the Cloudflare dashboard, choose Add a domain, enter weunbound.com and pick the Free plan. Cloudflare shows two nameservers. In GoDaddy, open the domain, then DNS, then Nameservers, choose to use your own, and paste both in. Cloudflare emails you once it is active, usually within an hour.
 2. **Create the Pages project.** Open Workers & Pages, then Create, then Pages, then Connect to Git. Pick this repository and the `main` branch. Leave the framework preset as None, the build command empty, and the output directory as `/`.
-3. **Attach the domain.** In the project, open Custom domains and add the domain, and the `www.` version too. Cloudflare creates the DNS records and the SSL certificate.
+3. **Attach the domain.** In the project, open Custom domains and add `weunbound.com`, then `www.weunbound.com`. Cloudflare creates the DNS records and the SSL certificate.
 4. **Turn off GitHub Pages** once the new domain works, in the repository's Settings, then Pages, so the site is not served in two places.
 
 Every push to `main` deploys again on its own. `_headers` sets security headers and browser caching. `404.html` is used as the not-found page.
