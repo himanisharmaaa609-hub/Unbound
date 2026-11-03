@@ -30,6 +30,8 @@ export function fitsFormat(keyword, format) {
   const k = normalize(keyword);
   const words = k.split(' ');
   if (words.length < 2 || words.length > 9) return false;
+  // Agency keywords mostly send readers to rival agencies. Keep only question-style ones.
+  if (/\bagenc(y|ies)\b/.test(k) && !/^(what|how|why|when|should|do|does|is)\b/.test(k)) return false;
   switch (format) {
     case 'comparison': return /\b(vs|versus)\b/.test(k) && k.split(/\b(?:vs|versus)\b/).every((s) => s.trim().length > 1);
     case 'listicle': return !/\bvs\b/.test(k) && /\b(best|top|tools|alternatives?|platforms|apps|software|agencies)\b/.test(k) && !/\bagenc(y|ies)\b/.test(k);

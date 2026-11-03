@@ -126,6 +126,8 @@ test('format fit', () => {
   assert.ok(!fitsFormat('best digital marketing agencies in delhi', 'listicle'));
   assert.ok(fitsFormat('best crm for startups', 'listicle'));
   assert.equal(inferFormat('semrush vs ahrefs'), 'comparison');
+  assert.ok(!fitsFormat('d2c marketing agency', 'guide'));
+  assert.ok(fitsFormat('what does a marketing agency do', 'guide'));
   assert.ok(overlap('brand positioning examples', 'Brand positioning examples for startups') >= 0.75);
 });
 
