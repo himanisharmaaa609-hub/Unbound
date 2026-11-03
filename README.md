@@ -74,3 +74,7 @@ The site is plain HTML with no build step, so Cloudflare Pages serves the reposi
 4. **Turn off GitHub Pages** once the new domain works, in the repository's Settings, then Pages, so the site is not served in two places.
 
 Every push to `main` deploys again on its own. `_headers` sets security headers and browser caching. `404.html` is used as the not-found page.
+
+## Blog autopilot
+
+The blog at `/blog/` is written by a daily bot that runs on GitHub Actions with Claude Code. Every morning it opens an issue with 5 keyword options. Reply with a number, check the preview link it posts, and the post goes live at 20:00 IST unless you reply `hold`. Setup steps, the daily flow and the safety rules are in `autopilot/README.md`.

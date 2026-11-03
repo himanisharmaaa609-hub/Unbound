@@ -1,0 +1,5 @@
+# Keep the bot's source files off the public site (Cloudflare Pages serves the whole repo).
+/autopilot/* / 302
+/autopilot / 302
+/.github/* / 302
+/README.md / 302

@@ -1,0 +1,259 @@
+# Afternoon: the owner's reply (or the 13:00 fallback) starts the post.
+# prepare (issues) -> draft (Claude token only) -> verify (no secrets) -> ship (push) -> report (on failure)
+name: autopilot write
+on:
+  issue_comment:
+    types: [created]
+  schedule:
+    - cron: '30 7 * * *'   # 13:00 IST: no reply means option 1
+    - cron: '30 8 * * *'   # 14:00 IST: a second issue for the same day
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: Issue number (empty = today's waiting issue)
+        type: string
+        required: false
+      pick:
+        description: Force an option, 1 to 5
+        type: string
+        required: false
+      reuse_run:
+        description: Finish the draft saved by this earlier run ID, with no Claude call
+        type: string
+        required: false
+
+permissions: {}
+concurrency:
+  # One group per issue: a shared group would silently cancel queued runs.
+  group: autopilot-write-${{ github.event.issue.number || inputs.issue || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: >-
+      github.event_name != 'issue_comment' || (
+        github.event.comment.user.login == github.repository_owner &&
+        contains(github.event.issue.labels.*.name, 'autopilot') &&
+        startsWith(github.event.issue.title, 'autopilot ') &&
+        !github.event.issue.pull_request )
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+      actions: read
+    outputs:
+      go: ${{ steps.p.outputs.go }}
+      issue: ${{ steps.p.outputs.issue }}
+      keyword: ${{ steps.p.outputs.keyword }}
+      angle: ${{ steps.p.outputs.angle }}
+      format: ${{ steps.p.outputs.format }}
+      scene: ${{ steps.p.outputs.scene }}
+      date: ${{ steps.p.outputs.date }}
+      resume_run: ${{ steps.p.outputs.resume_run }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - name: Read the reply
+        id: p
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || inputs.issue }}
+          INPUT_PICK: ${{ inputs.pick }}
+          REPO_OWNER: ${{ github.repository_owner }}
+        run: node autopilot/write.mjs prepare
+
+      - name: Fetch earlier research for the same keyword
+        if: steps.p.outputs.go == 'true' && steps.p.outputs.resume_run != ''
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: work-${{ steps.p.outputs.issue }}
+          run-id: ${{ steps.p.outputs.resume_run }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/resume
+      - name: Hand it to the draft job
+        if: steps.p.outputs.go == 'true' && steps.p.outputs.resume_run != ''
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: resume
+          path: ${{ runner.temp }}/resume
+          include-hidden-files: true
+          if-no-files-found: ignore
+          retention-days: 3
+
+      - name: Fetch a saved draft (reuse_run)
+        if: steps.p.outputs.go == 'true' && inputs.reuse_run != ''
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: post
+          run-id: ${{ inputs.reuse_run }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/post
+      - name: Pass the saved draft on
+        if: steps.p.outputs.go == 'true' && inputs.reuse_run != ''
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: post
+          path: ${{ runner.temp }}/post
+          retention-days: 7
+
+  draft:
+    needs: prepare
+    if: needs.prepare.outputs.go == 'true' && inputs.reuse_run == ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - name: Sandbox tools for Claude Code's Bash sandbox
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq bubblewrap socat
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+      - name: Install Claude Code (pinned)
+        run: npm install -g @anthropic-ai/claude-code@2.1.317
+      - name: Restore earlier research
+        if: needs.prepare.outputs.resume_run != ''
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: resume
+          path: autopilot/work
+      - name: Write the post
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          KEYWORD: ${{ needs.prepare.outputs.keyword }}
+          ANGLE: ${{ needs.prepare.outputs.angle }}
+          FORMAT: ${{ needs.prepare.outputs.format }}
+          DATE: ${{ needs.prepare.outputs.date }}
+          ISSUE: ${{ needs.prepare.outputs.issue }}
+        run: |
+          mkdir -p autopilot/work "$RUNNER_TEMP/write"
+          node autopilot/run-stage.mjs write --dir "$RUNNER_TEMP/write" --vars-env KEYWORD,ANGLE,FORMAT,DATE,ISSUE
+      - name: Package only the allowed post files
+        run: node autopilot/collect.mjs --work autopilot/work --result "$RUNNER_TEMP/write/write.result.json" --out "$RUNNER_TEMP/post"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: post
+          path: ${{ runner.temp }}/post
+          retention-days: 7
+      - name: Save the research so a re-run does not pay for it twice
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: work-${{ needs.prepare.outputs.issue }}
+          path: autopilot/work
+          include-hidden-files: true
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Save the run summary
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: write-result
+          path: ${{ runner.temp }}/write/write.result.json
+          if-no-files-found: ignore
+          retention-days: 14
+
+  verify:
+    needs: [prepare, draft]
+    if: >-
+      always() && needs.prepare.outputs.go == 'true' &&
+      (needs.draft.result == 'success' || (needs.draft.result == 'skipped' && inputs.reuse_run != ''))
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - name: Install image tools
+        working-directory: autopilot
+        run: |
+          npm ci --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: post
+          path: ${{ runner.temp }}/post
+      - name: Check, draw images, lint, build
+        env:
+          DATE: ${{ needs.prepare.outputs.date }}
+          SCENE: ${{ needs.prepare.outputs.scene }}
+        run: |
+          node autopilot/apply.mjs "$RUNNER_TEMP/post" --date "$DATE" --render none
+          SLUG=$(node -p "require('./blog/posts.json').filter(r=>!r.published).pop().slug")
+          node autopilot/write.mjs assets --slug "$SLUG" --scene "$SCENE" --out "$RUNNER_TEMP/assets.json"
+          node autopilot/lint.mjs "autopilot/content/$SLUG" --json > "$RUNNER_TEMP/lint.json" || { cat "$RUNNER_TEMP/lint.json"; exit 1; }
+          node autopilot/render.mjs --drafts
+          node autopilot/collect.mjs --tree "$SLUG" --out "$RUNNER_TEMP/final" --assets "$RUNNER_TEMP/assets.json" --result "$RUNNER_TEMP/post/result.json"
+          cp "$RUNNER_TEMP/lint.json" "$RUNNER_TEMP/final/lint.json"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: post-final
+          path: ${{ runner.temp }}/final
+          retention-days: 14
+
+  ship:
+    needs: [prepare, verify]
+    if: always() && needs.verify.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      # Latest main: an older workflow file on a branch would count as a workflow edit.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: post-final
+          path: ${{ runner.temp }}/final
+      - name: Branch, preview, quote check, comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ needs.prepare.outputs.issue }}
+          CF_PAGES_DOMAIN: ${{ vars.CF_PAGES_DOMAIN }}
+          REPO_OWNER: ${{ github.repository_owner }}
+        run: node autopilot/write.mjs ship --issue "$ISSUE" --pkg "$RUNNER_TEMP/final"
+
+  report:
+    needs: [prepare, draft, verify, ship]
+    if: always() && needs.prepare.outputs.go == 'true' && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ needs.prepare.outputs.issue }}
+        run: node autopilot/write.mjs report --issue "$ISSUE" --what write

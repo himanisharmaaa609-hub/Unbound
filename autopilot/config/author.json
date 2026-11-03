@@ -1,0 +1,47 @@
+{
+  "byline": "Amisha Sethi and Himani Sharma",
+  "bylineNote": "Founders of UNBOUND",
+  "organisation": {
+    "name": "UNBOUND",
+    "url": "https://weunbound.com/",
+    "facts": [
+      "UNBOUND is an outsourced marketing department for startups and growing brands.",
+      "One UNBOUND retainer covers a fractional CMO, brand, product marketing, growth hacking, PR, social media, SEO/SEM and content, sales enablement, website development and optimisation, and media strategy.",
+      "The two founders lead every UNBOUND account themselves.",
+      "UNBOUND uses AI in its workflow for research, drafting, reporting and testing, with people making the decisions.",
+      "UNBOUND clients receive a monthly report as a PowerPoint deck.",
+      "UNBOUND offers a free 30-minute call with the founders, booked at https://weunbound.com/#book."
+    ]
+  },
+  "people": [
+    {
+      "name": "Amisha Sethi",
+      "role": "Co-founder, UNBOUND",
+      "linkedin": "https://www.linkedin.com/in/amishasethi/",
+      "facts": [
+        "More than 21 years in marketing leadership.",
+        "Led marketing at BlackBerry, AirAsia, Airtel and Locus.",
+        "Named among the Top 50 Brand Leaders by Bloomberg and CMO Asia in 2012.",
+        "Kellogg executive scholar, with an MBA from Amity."
+      ]
+    },
+    {
+      "name": "Himani Sharma",
+      "role": "Co-founder, UNBOUND",
+      "linkedin": "https://www.linkedin.com/in/himani-sharma-b821b1bb",
+      "facts": [
+        "More than nine years in brand marketing and partnerships.",
+        "Senior Brand Marketing Manager at FPSB India, leading brand strategy and stakeholder engagement for the CFP certification.",
+        "Earlier roles at ACCA and NestAway Technologies.",
+        "Ran an IIM Bangalore bootcamp and an IIM Ahmedabad workshop, each with more than 300 attendees.",
+        "B.Com (Hons.) from the University of Delhi."
+      ]
+    }
+  ],
+  "experienceNever": [
+    "Never say the founders tested, used, reviewed or ran any tool, product or campaign.",
+    "Never name a client, a client result or a case study.",
+    "Never state a team size, office location, client count, revenue or growth figure for UNBOUND.",
+    "Never give a tenure other than the ones listed above."
+  ]
+}

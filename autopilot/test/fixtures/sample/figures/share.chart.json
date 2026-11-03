@@ -1,0 +1,18 @@
+{
+  "title": "Test chart",
+  "unit": "%",
+  "alt": "Bar chart comparing two example values, A and B, from the test fixture",
+  "caption": "Test",
+  "bars": [
+    {
+      "label": "A",
+      "value": 40,
+      "fact": "F1"
+    },
+    {
+      "label": "B",
+      "value": 25,
+      "fact": "F1"
+    }
+  ]
+}

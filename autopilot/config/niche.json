@@ -1,0 +1,54 @@
+{
+  "market": { "hl": "en-IN", "gl": "IN", "trendsGeo": "IN", "newsCeid": "IN:en" },
+  "about": "UNBOUND is an outsourced marketing department for Indian startups and growing brands: fractional CMO, brand, product marketing, growth, PR, social media, SEO/SEM and content, sales enablement, website and media strategy, with AI in the workflow.",
+  "lexicon": [
+    "marketing", "brand", "branding", "seo", "sem", "search engine", "google ads", "meta ads", "ads", "advertising",
+    "campaign", "social media", "instagram", "linkedin", "youtube", "reels", "influencer", "creator", "content",
+    "pr", "public relations", "press", "media", "reputation", "growth", "growth hacking", "go-to-market", "gtm",
+    "cmo", "fractional", "agency", "outsourced", "startup", "d2c", "b2b", "saas", "lead", "leads", "funnel",
+    "conversion", "landing page", "website", "email marketing", "whatsapp", "crm", "hubspot", "zoho",
+    "ai overviews", "ai mode", "chatgpt", "perplexity", "gemini", "generative engine", "geo", "aeo", "llm",
+    "sales enablement", "positioning", "customer acquisition", "cac", "retention", "analytics", "ga4"
+  ],
+  "seeds": {
+    "guide": [
+      "fractional cmo", "outsourced marketing", "marketing strategy for startups", "brand positioning",
+      "go to market strategy", "growth hacking", "content marketing strategy", "seo for startups",
+      "linkedin marketing for founders", "pr for startups", "sales enablement", "marketing plan",
+      "b2b lead generation", "d2c marketing", "instagram marketing", "ai seo", "website conversion"
+    ],
+    "listicle": [
+      "best marketing tools", "best seo tools", "best social media scheduling tools", "best crm for small business",
+      "best email marketing tools", "best ai marketing tools", "best analytics tools", "best landing page builders",
+      "best pr tools", "best linkedin tools", "best influencer marketing platforms", "best website builders"
+    ],
+    "comparison": [
+      "in house marketing vs agency", "fractional cmo vs full time cmo", "hubspot vs zoho", "seo vs sem",
+      "organic vs paid", "semrush vs ahrefs", "mailchimp vs brevo", "webflow vs wordpress",
+      "meta ads vs google ads", "canva vs figma", "buffer vs hootsuite", "chatgpt vs perplexity"
+    ],
+    "news": [
+      "google ai mode", "ai overviews", "google ads", "meta ads", "instagram", "linkedin", "youtube",
+      "chatgpt", "openai ads", "perplexity", "google search update", "whatsapp business", "threads"
+    ]
+  },
+  "modifiers": {
+    "guide": ["how to", "what is", "for", "strategy", "checklist"],
+    "listicle": ["best", "top", "for", "free", "alternative"],
+    "comparison": ["vs", "or", "difference"],
+    "news": ["update", "new", "launch", "announces"]
+  },
+  "seedsPerDay": 6,
+  "modifiersPerSeed": 2,
+  "newsQueries": [
+    "digital marketing India", "Google search update marketers", "Meta ads update", "Instagram new feature",
+    "LinkedIn update marketers", "AI marketing tools", "ChatGPT ads", "Google AI Mode", "startup marketing India"
+  ],
+  "subreddits": ["marketing", "digital_marketing", "SEO", "socialmedia", "PPC", "startups", "IndianStartups"],
+  "hnMinPoints": 80,
+  "neverWrite": [
+    "rival agencies by name in a listicle (listicles name tools and platforms, never other agencies)",
+    "politics, religion, health or finance advice",
+    "claims that UNBOUND worked with a named client"
+  ]
+}

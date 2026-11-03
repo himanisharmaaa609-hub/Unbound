@@ -1,0 +1,15 @@
+{
+  "name": "unbound-blog-autopilot",
+  "private": true,
+  "type": "module",
+  "description": "Daily blog autopilot for weunbound.com. See autopilot/README.md.",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "lint": "node lint.mjs",
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.56.1",
+    "sharp": "0.35.5"
+  }
+}

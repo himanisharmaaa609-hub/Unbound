@@ -1,0 +1,13 @@
+{
+  "note": "Cover backgrounds. Each is drawn by image.mjs from these colours, so no stock photos are needed. A scene is reserved per issue and not reused until every scene has been used once.",
+  "scenes": [
+    { "id": "ink-flame", "bg": "#0A0A0B", "a": "#FF4A1C", "b": "#4F2BF5", "text": "#FFFFFF", "pattern": "orbit" },
+    { "id": "paper-violet", "bg": "#F6F6F4", "a": "#4F2BF5", "b": "#CBBEFF", "text": "#0A0A0B", "pattern": "grid" },
+    { "id": "violet-saffron", "bg": "#1B1240", "a": "#FFC23A", "b": "#4F2BF5", "text": "#FFFFFF", "pattern": "rings" },
+    { "id": "paper-flame", "bg": "#FFFFFF", "a": "#FF4A1C", "b": "#FFC23A", "text": "#0A0A0B", "pattern": "orbit" },
+    { "id": "ink-mint", "bg": "#0A0A0B", "a": "#2DD4A7", "b": "#4F2BF5", "text": "#FFFFFF", "pattern": "grid" },
+    { "id": "lilac-ink", "bg": "#E6E0FF", "a": "#4F2BF5", "b": "#FF4A1C", "text": "#0A0A0B", "pattern": "rings" },
+    { "id": "saffron-ink", "bg": "#FFF0C7", "a": "#FF4A1C", "b": "#0A0A0B", "text": "#0A0A0B", "pattern": "grid" },
+    { "id": "ink-lilac", "bg": "#121216", "a": "#CBBEFF", "b": "#FF4A1C", "text": "#FFFFFF", "pattern": "rings" }
+  ]
+}
