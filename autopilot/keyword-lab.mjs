@@ -2,7 +2,7 @@
 // Free keyword research. node autopilot/keyword-lab.mjs daily --format <fmt> [--out <dir>]
 // Writes candidates.json (everything, with sources and fetch times) and digest.md (small, for Claude).
 // Rule: every number the owner sees comes from this script, with a source and a date. Claude never types a number.
-import { writeFileSync, existsSync } from 'node:fs';
+import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { config, today, dayOfYear, runDir, ROOT, readJson } from './lib/day.mjs';
 import { googleNews, googleTrends, hackerNews, redditTop, autocomplete, bingKeywordStats, ENGINES } from './lib/sources.mjs';
@@ -45,6 +45,7 @@ export async function runLab({ format, out, date = today(), log = console.error 
   const niche = config('niche');
   const market = niche.market;
   const fetchedAt = new Date().toISOString();
+  mkdirSync(out, { recursive: true });
 
   // 1. Trend sweep, last 48 hours
   log('trends: news, google trends, hacker news, reddit');

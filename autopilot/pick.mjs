@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // node autopilot/pick.mjs lab --format <fmt> --dir <runDir>        free keyword research + live post list
 // node autopilot/pick.mjs post --dir <runDir> --format <fmt> --slot <n> [--dry]
-import { writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { config, today, ROOT, readJson } from './lib/day.mjs';
 import { runLab, livePostTitles } from './keyword-lab.mjs';
@@ -56,6 +56,7 @@ const cmd = process.argv[2];
 const dir = arg('dir');
 const format = arg('format');
 if (cmd === 'lab') {
+  mkdirSync(dir, { recursive: true });
   const data = await runLab({ format, out: dir });
   const posts = livePostTitles();
   writeFileSync(path.join(dir, 'posts.md'), posts.length ? posts.map((p) => `- ${p}`).join('\n') + '\n' : '- (no posts yet)\n');
