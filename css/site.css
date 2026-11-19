@@ -1109,7 +1109,7 @@ html.static .rh-cursor{display:none}
   .nav.is-open .nav-drop.is-open .nav-menu{display:block}
   .nav.is-open .nav-menu::before{display:none}
 }
-.foot-grid{grid-template-columns:minmax(0,1.4fr) repeat(4,minmax(0,1fr))}
+.foot-grid{grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr))}
 @media (max-width:1100px){.foot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.foot-brand{grid-column:1/-1}}
 @media (max-width:860px){.foot-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.foot-grid{grid-template-columns:1fr}}

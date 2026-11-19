@@ -37,7 +37,7 @@ gate -> keyword lab (free)  ->  prepare (issue) -> draft (Claude token only)   -
 ```
 config/budget.json     model, effort, caps, schedule, formats, word budgets, owner
 config/niche.json      seeds, on-topic words, news queries, subreddits
-config/author.json     the ONLY source of facts about the founders and UNBOUND
+config/author.json     the ONLY source of facts about UNBOUND
 config/scenes.json     cover backgrounds (rotated)
 config/indexnow.json   public IndexNow key (the key file sits at the site root)
 prompts/               pick.md, write.md, house-overrides.md

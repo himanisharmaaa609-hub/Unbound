@@ -211,9 +211,12 @@
 .ub-mani .ub-w.is-hot.is-on{color:var(--flame)}
 .ub-mani .ub-w.is-hot2.is-on{color:var(--violet)}
 
-/* team: two founders, warmer portraits */
-.team .tm-track{gap:56px}
+/* discovery call: UNBOUND and your brand on the call */
 .ub-call .rh-grid{grid-template-rows:1fr}
+.rh-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:0;border-radius:9px;font-family:var(--mono);font-size:10px;letter-spacing:.02em}
+.rh-tile svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rh-tile-ub{background:#0A0A0B;color:#fff}
+.rh-tile-you{background:#E6E0FF;color:#4F2BF5}
 
 /* magnetic buttons */
 .ub-magnet{transition:transform .35s cubic-bezier(.2,.8,.2,1),background .25s,box-shadow .25s}

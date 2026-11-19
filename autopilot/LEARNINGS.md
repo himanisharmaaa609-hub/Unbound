@@ -40,7 +40,7 @@ The blueprint was written for an Astro site on Vercel. weunbound.com is plain HT
 - One writer agent, no subagents; quote-only WebFetch; research limits in `budget.json`.
 - `run-stage` refuses to call Claude for a pick with no digest.
 - Cover scenes reserved in the issue state so parallel posts never share one.
-- The author's facts come only from `config/author.json`.
+- Facts about UNBOUND come only from `config/author.json`; no person at UNBOUND is ever named.
 
 ## Costs
 

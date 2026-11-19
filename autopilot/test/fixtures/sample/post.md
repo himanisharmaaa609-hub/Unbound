@@ -27,4 +27,4 @@ A startup should consider a fractional CMO when marketing spend is growing but n
 
 ## How UNBOUND approaches the role
 
-UNBOUND pairs the fractional CMO role with the team that does the work, so the plan and the execution sit in one place. Read more about [the founders](/team/) or [book a call](/#book). The test fixture cites one source [F1].
+UNBOUND pairs the fractional CMO role with the team that does the work, so the plan and the execution sit in one place. Read more about [what we do](/#services) or [book a call](/#book). The test fixture cites one source [F1].

@@ -147,7 +147,7 @@ export function renderPost(slug, { drafts = false } = {}) {
     {
       '@context': 'https://schema.org', '@type': 'BlogPosting', headline: meta.title, description: meta.description,
       datePublished: date, dateModified: row.updated || date, mainEntityOfPage: url, image: og,
-      author: author.people.map((p) => ({ '@type': 'Person', name: p.name, url: p.linkedin })),
+      author: { '@type': 'Organization', name: author.byline, url: `${ORIGIN}/` },
       publisher: { '@type': 'Organization', name: 'UNBOUND', url: `${ORIGIN}/`, logo: { '@type': 'ImageObject', url: `${ORIGIN}/assets/logo-512.png` } },
       keywords: meta.keyword, articleSection: meta.category, wordCount: row.words,
     },
@@ -176,7 +176,7 @@ ${row.published ? '' : '<div class="bp-draft wrap"><b>Draft preview.</b> This po
   <h1 class="bp-title">${esc(meta.title)}</h1>
   <p class="bp-lead">${esc(meta.description)}</p>
   <div class="bp-meta">
-    <span class="bp-by">By ${author.people.map((p) => `<a href="${esc(p.linkedin)}" target="_blank" rel="noopener">${esc(p.name)}</a>`).join(' and ')}</span>
+    <span class="bp-by">By ${esc(author.byline)}</span>
     <span><time datetime="${date}">${longDate(date)}</time></span>
     <span>${row.readMin} min read</span>
   </div>
@@ -193,7 +193,7 @@ ${sources.length ? `<section class="bp-sources" aria-labelledby="sources"><h2 id
   }).join('')}</ol></section>` : ''}
     <div class="bp-cta">
       <h2>${esc(meta.cta?.heading || 'Want a whole marketing team behind this?')}</h2>
-      <p>${esc(meta.cta?.text || 'UNBOUND runs strategy, brand, PR, social, SEO and growth for you on one retainer, led by the founders.')}</p>
+      <p>${esc(meta.cta?.text || 'UNBOUND runs strategy, brand, PR, social, SEO and growth for you on one retainer, led by a senior team.')}</p>
       <a class="btn btn-dark" href="../../#book">Book a free 30-minute call <svg><use href="#i-arrow"/></svg></a>
     </div>
   </div>
@@ -252,7 +252,6 @@ export function renderSitemap() {
   const list = visible(loadPosts(), false);
   const urls = [
     { loc: `${ORIGIN}/`, pri: '1.0' },
-    { loc: `${ORIGIN}/team/`, pri: '0.8' },
     { loc: `${ORIGIN}/contact/`, pri: '0.6' },
     ...(list.length ? [{ loc: `${ORIGIN}/blog/`, pri: '0.8', mod: list[0].date }] : []),
     ...list.map((p) => ({ loc: `${ORIGIN}/blog/${p.slug}/`, pri: '0.7', mod: p.updated || p.date })),
@@ -266,7 +265,7 @@ ${urls.map((u) => `  <url><loc>${u.loc}</loc>${u.mod ? `<lastmod>${u.mod}</lastm
 
 const NAV_RE = /<!--ap:blog-nav-->[\s\S]*?<!--\/ap:blog-nav-->/g;
 const FOOT_RE = /<!--ap:blog-foot-->[\s\S]*?<!--\/ap:blog-foot-->/g;
-export const SITE_PAGES = [['index.html', ''], ['contact/index.html', '../'], ['team/index.html', '../']];
+export const SITE_PAGES = [['index.html', ''], ['contact/index.html', '../']];
 
 export function renderNav(show) {
   for (const [file, prefix] of SITE_PAGES) {

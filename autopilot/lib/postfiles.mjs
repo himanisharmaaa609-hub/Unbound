@@ -79,6 +79,6 @@ export function validatePackage(pkgDir, { root } = {}) {
 // Paths a ship or publish commit may change for one post.
 export function allowedChange(rel, slug) {
   return rel.startsWith(`autopilot/content/${slug}/`) || rel.startsWith(`blog/${slug}/`) ||
-    ['blog/index.html', 'blog/posts.json', 'blog/feed.xml', 'sitemap.xml', 'llms.txt', 'index.html', 'contact/index.html', 'team/index.html', 'autopilot/state/queue.json'].includes(rel) ||
+    ['blog/index.html', 'blog/posts.json', 'blog/feed.xml', 'sitemap.xml', 'llms.txt', 'index.html', 'contact/index.html', 'autopilot/state/queue.json'].includes(rel) ||
     /^blog\/[a-z0-9-]+\/index\.html$/.test(rel); // related-post lists on other posts are re-rendered
 }

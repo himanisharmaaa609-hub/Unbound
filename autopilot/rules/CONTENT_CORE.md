@@ -9,8 +9,8 @@ The house rules for every article on weunbound.com/blog. Rule IDs are referenced
 - **F3.** Prefer primary sources: the vendor's own docs and pricing pages, official announcements, government data and named research. Use a news report only for news.
 - **F4.** For a comparison, check every claimed difference against both vendors' own docs, including whether the other product has a mirror feature. A difference you cannot confirm on both sides does not go in the post.
 - **F5.** Prices change. State a price only with its source date, and say it was the listed price on that date.
-- **F6.** Facts about the authors and UNBOUND come only from `autopilot/config/author.json`. Nothing else about them is ever written.
-- **F7.** No hands-on claims. Never write that the founders or UNBOUND tested, used, reviewed or ran a tool, campaign or product. Never name a client or a client result.
+- **F6.** Facts about UNBOUND come only from `autopilot/config/author.json`. Nothing else about it is ever written. Never name, describe or quote the founders or anyone at UNBOUND.
+- **F7.** No hands-on claims. Never write that UNBOUND or its team tested, used, reviewed or ran a tool, campaign or product. Never name a client or a client result.
 
 ## V: voice
 
@@ -39,7 +39,7 @@ The house rules for every article on weunbound.com/blog. Rule IDs are referenced
 ## L: links
 
 - **L1.** Official homepage link on each named product's first mention in the body, never in headings. External links are https only. The renderer adds `nofollow noopener noreferrer` and opens them in a new tab.
-- **L2.** Internal links only to `/`, `/team/`, `/contact/`, `/#book`, `/#services`, `/blog/` and live posts listed in `blog/posts.json` with `"published": true`. At least one internal link per post.
+- **L2.** Internal links only to `/`, `/contact/`, `/#book`, `/#services`, `/blog/` and live posts listed in `blog/posts.json` with `"published": true`. At least one internal link per post.
 - **L3.** No affiliate links and no tracking parameters.
 
 ## I: images

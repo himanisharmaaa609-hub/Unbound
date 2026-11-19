@@ -11,26 +11,22 @@ python3 -m http.server 8000
 # then open http://localhost:8000
 ```
 
-or `npx serve .` if you have Node. Opening `index.html` by double-click mostly works too, but the founder cards, calendar and fonts behave best on a local server.
+or `npx serve .` if you have Node. Opening `index.html` by double-click mostly works too, but the calendar, voice clips and fonts behave best on a local server.
 
 Useful switches for testing:
 
 - `?static=1` shows every animation in its final state (for screenshots and print)
-- `?flip=1,2` opens founder cards by number
 - `?talk=Your+question` opens the chat bar with that question asked
 - `?dryrun=1` records form submissions in `window.__fwSent` instead of sending them
 
 ## Files
 
-- `index.html`: the homepage (hero, roles strip, your team, story, what we do, services, why UNBOUND, manifesto, founders, process, booking, footer)
+- `index.html`: the homepage (hero, roles strip, your team, story, what we do, services, why UNBOUND, manifesto, process, booking, footer)
 - `contact/index.html`: contact page with a message form
-- `team/index.html`: the team page, with each founder's full profile
-- `css/site.css`: the base design system (grid, type, buttons, cards, founder cards, calendar)
+- `css/site.css`: the base design system (grid, type, buttons, cards, calendar)
 - `css/unbound.css`: UNBOUND palette and the new sections and motion
-- `js/site.js`: nav, tabs, reveal-on-scroll, hanging founder cards, booking calendar, chat bar and voice agent, forms
+- `js/site.js`: nav, tabs, reveal-on-scroll, hanging profile cards (only run if a `#team` section exists), booking calendar, chat bar and voice agent, forms
 - `js/unbound.js`: headline and word rotator, scroll-drawn story paths, compare toggle, manifesto highlight, scroll progress, magnetic buttons
-- `assets/team/`: founder portraits (`himani.jpg`, `amisha.jpg`); `assets/team/himani/` and `assets/team/amisha/` hold the photos on the team page
-- `assets/qr/`: QR codes for each founder's LinkedIn
 - `assets/screens/`: the workspace screenshots (monthly report, content calendar, media strategy, PR tracker). They show demo data for a fictional sample brand and say so on the page; swap in real screens from client work when you have them, keeping the same file names and a 16:10 crop
 - `assets/tools/`: platform logos for the tools strip, from Simple Icons (CC0). The logos remain trademarks of their owners; edit the list to match the tools you actually use
 - `assets/voice/`: the voice agent's spoken answers, three phrasings per answer (`<id>.mp3`, `<id>-2.mp3`, `<id>-3.mp3`)
@@ -61,8 +57,7 @@ Tokens live at the top of `css/site.css` (`--flame`, `--violet`, `--saffron`, `-
 
 2. **Email address.** Every "Email us" link and booking invite uses `hello@example.com`. Search and replace it in `index.html`, `contact/index.html` and `js/site.js` (`SITE.emails`).
 3. **Forms.** The subscribe and contact forms need somewhere to send to. Put an inbox in `formTo` in `js/site.js` to use FormSubmit (formsubmit.co sends a one-time activation email the first time), or a web app URL in `leadUrl`. With both empty, the forms offer to open the visitor's own email app instead.
-4. **Booking link.** The calendar works without a backend: it opens a Google Calendar invite to the founders. To use Cal.com or Calendly instead, paste the link into `bookingUrl` in `js/site.js`.
-5. **Founder profiles.** Both full profiles live in `team/index.html` (sections `#amisha` and `#himani`); the shorter versions are on the backs of the homepage cards (`.tm-back` in `index.html`). Event photos sit in `assets/team/himani/` and `assets/team/amisha/`.
+4. **Booking link.** The calendar works without a backend: it opens a Google Calendar invite to the team (`SITE.emails`). To use Cal.com or Calendly instead, paste the link into `bookingUrl` in `js/site.js`.
 
 ## Hosting on Cloudflare
 

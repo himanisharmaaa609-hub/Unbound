@@ -21,10 +21,11 @@ export const BANNED = [
   'as an ai', 'i hope this helps', 'happy marketing',
 ];
 const HANDS_ON = /\b(we|i) (tested|tried|used|reviewed|ran|have used|have tested|personally)\b|\bin (our|my) (experience|testing|tests)\b|\bour clients?\b|\bwe helped\b|\bwhen we worked with\b/i;
+const FOUNDERS = /\b(?:(?:unbound'?s?|our) (?:co-?)?founders?|(?:co-?)?founders? (?:of|at) unbound)\b/i;
 const LEAN = /^(this|that|these|those|it|they|such)\s+(is|are|was|were|means|helps|makes|gives|lets|can|will|has|have|matters)\b/i;
-const ALLOWED_ABBR = new Set(['AI', 'UNBOUND', 'CEO', 'CMO', 'USA', 'UK', 'FAQ', 'URL', 'HTML', 'PDF', 'API', 'IIM', 'CFP', 'FPSB', 'ACCA', 'II', 'III', 'IV', 'OK', 'TV', 'B2B', 'B2C', 'D2C', 'SaaS', 'GST', 'INR', 'USD', 'PR']);
+const ALLOWED_ABBR = new Set(['AI', 'UNBOUND', 'CEO', 'CMO', 'USA', 'UK', 'FAQ', 'URL', 'HTML', 'PDF', 'API', 'II', 'III', 'IV', 'OK', 'TV', 'B2B', 'B2C', 'D2C', 'SaaS', 'GST', 'INR', 'USD', 'PR']);
 const CATEGORY = { guide: 'Guide', listicle: 'Listicle', comparison: 'Comparison', news: 'News' };
-const SITE_LINKS = new Set(['/', '/team/', '/contact/', '/#book', '/#services', '/#story', '/#usp', '/blog/']);
+const SITE_LINKS = new Set(['/', '/contact/', '/#book', '/#services', '/#story', '/#usp', '/blog/']);
 
 // Paragraphs and list items first, then sentences inside each.
 const sentencesOf = (text) => text.split(/\n\s*\n|\n(?=\s*(?:[-*]|\d+\.)\s)/)
@@ -87,6 +88,7 @@ export function lintDir(dir, { root = ROOT } = {}) {
   if (/[—–]/.test(everything)) E('no em dashes or en dashes anywhere; use a full stop, comma or "to"');
   const lower = everything.toLowerCase();
   for (const b of BANNED) if (lower.includes(b)) E(`banned phrase: "${b}"`);
+  if (FOUNDERS.test(everything)) E(`mentions UNBOUND's founders: "${everything.match(FOUNDERS)[0]}" (F6: nothing about the people behind UNBOUND)`);
   if (HANDS_ON.test(everything)) E(`hands-on claim: "${everything.match(HANDS_ON)[0]}" (the authors never claim to have tested, used or run anything)`);
 
   // citations: numbers need a source
