@@ -55,8 +55,8 @@ Tokens live at the top of `css/site.css` (`--flame`, `--violet`, `--saffron`, `-
 
 ## Things to swap in before going live
 
-2. **Email address.** Every "Email us" link and booking invite uses `hello@example.com`. Search and replace it in `index.html`, `contact/index.html` and `js/site.js` (`SITE.emails`).
-3. **Forms.** The subscribe and contact forms need somewhere to send to. Put an inbox in `formTo` in `js/site.js` to use FormSubmit (formsubmit.co sends a one-time activation email the first time), or a web app URL in `leadUrl`. With both empty, the forms offer to open the visitor's own email app instead.
+2. **Email address.** Every "Email us" link, booking invite and form uses `connect@weunbound.com`. To change it, search and replace it in `index.html`, `contact/index.html`, `llms.txt` and `js/site.js` (`SITE.emails` and `formTo`).
+3. **Forms.** The subscribe and contact forms send to `formTo` in `js/site.js` (`connect@weunbound.com`) through FormSubmit. The first time a form is sent, formsubmit.co emails that inbox a one-time activation link; nothing is delivered until it is clicked. To use your own endpoint instead, put a web app URL in `leadUrl`. With both empty, the forms offer to open the visitor's own email app instead.
 4. **Booking link.** The calendar works without a backend: it opens a Google Calendar invite to the team (`SITE.emails`). To use Cal.com or Calendly instead, paste the link into `bookingUrl` in `js/site.js`.
 
 ## Hosting on Cloudflare

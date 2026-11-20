@@ -11,7 +11,7 @@
   /* ---------- config ---------- */
   var SITE = {
     // Where every "Email us" link, booking invite and fallback message goes.
-    emails: ['hello@example.com'],
+    emails: ['connect@weunbound.com'],
     // Paste a Cal.com / Calendly / Google appointment link here and the
     // "Book in Google Calendar" button will send visitors there instead of a Google Calendar invite.
     bookingUrl: '',
@@ -19,7 +19,7 @@
     // formTo: an inbox for FormSubmit (formsubmit.co) when there is no leadUrl. With both empty, forms
     // fall back to the visitor's own email app.
     leadUrl: '',
-    formTo: '',
+    formTo: 'connect@weunbound.com',
     hostTz: 'Asia/Kolkata',       // working hours are defined in this zone
     hostOffsetMin: 330,           // IST = UTC+5:30, no daylight saving
     workStart: 10 * 60,           // 10:00
@@ -51,6 +51,8 @@
     var f = { _captcha: 'false', _template: 'table' };
     if (p.type === 'report') { f._subject = 'Report requested · ' + p.name + ' · ' + p.domain + (p.score != null ? ' · ' + p.score + '/100' : ''); f.name = p.name; f.email = p.email; f.company = p.company; f._replyto = p.email; f._autoresponse = p.textReport; }
     else if (p.type === 'check') { f._subject = 'AI check · ' + p.domain + (p.score != null ? ' · ' + p.score + '/100' : ' · partial'); }
+    else if (p.type === 'contact') { f._subject = 'New message · ' + p.name + (p.company ? ' · ' + p.company : ''); f.name = p.name; f.email = p.email; f.company = p.company || 'not given'; f.message = p.message; f._replyto = p.email; }
+    else if (p.type === 'subscribe') { f._subject = 'New subscriber · ' + p.email; f.email = p.email; f.signed_up_from = p.source === 'popup' ? 'pop-up' : 'page section'; f._replyto = p.email; }
     else if (p.type === 'booking') { f._subject = 'Booking opened · ' + p.slotLabel; f.slot = p.slotLabel; f.slot_utc = p.slot; f.visitor_timezone = p.visitorTz; }
     if (p.domain) { f.domain = p.domain; f.score = p.score == null ? 'not available' : p.score + '/100 (' + p.grade + ')'; f.top_issues = (p.topIssues || []).join('; '); }
     f.page = p.page; f.referrer = p.referrer; f.timezone = p.tz; f.time = p.ts;
@@ -611,7 +613,7 @@
           speechSynthesis.speak(u);
         };
         audioEl.onended = end; audioEl.onerror = function () { audioEl.onerror = null; fallback(); };
-        audioEl.src = vBase + id + '.mp3?v=ub11';
+        audioEl.src = vBase + id + '.mp3?v=ub12';
         var pr = audioEl.play(); if (pr && pr.catch) pr.catch(function () { audioEl.onerror = null; fallback(); });
       };
 
