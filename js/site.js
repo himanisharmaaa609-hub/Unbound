@@ -56,7 +56,7 @@
     else if (p.type === 'booking') { f._subject = 'Booking opened · ' + p.slotLabel; f.slot = p.slotLabel; f.slot_utc = p.slot; f.visitor_timezone = p.visitorTz; }
     if (p.domain) { f.domain = p.domain; f.score = p.score == null ? 'not available' : p.score + '/100 (' + p.grade + ')'; f.top_issues = (p.topIssues || []).join('; '); }
     f.page = p.page; f.referrer = p.referrer; f.timezone = p.tz; f.time = p.ts;
-    return timeout(fetch('https://formsubmit.co/ajax/' + SITE.formTo, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(f), keepalive: !!keepalive }).then(function (r) { return r.json(); }).then(function (j) { if (String(j.success) !== 'true') throw new Error(j.message || 'not sent'); return j; }), 25000);
+    return timeout(fetch('https://formsubmit.co/ajax/' + SITE.formTo, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(f), keepalive: !!keepalive }).then(function (r) { return r.json().catch(function () { throw new Error('FormSubmit replied with HTTP ' + r.status); }); }).then(function (j) { if (String(j.success) !== 'true') throw new Error(j.message || 'not sent'); return j; }), 25000).catch(function (e) { try { console.warn('UNBOUND form not sent: ' + (e && e.message)); } catch (x) {} throw e; });
   }
 
   /* ---------- 1. nav ---------- */
@@ -613,7 +613,7 @@
           speechSynthesis.speak(u);
         };
         audioEl.onended = end; audioEl.onerror = function () { audioEl.onerror = null; fallback(); };
-        audioEl.src = vBase + id + '.mp3?v=ub13';
+        audioEl.src = vBase + id + '.mp3?v=ub14';
         var pr = audioEl.play(); if (pr && pr.catch) pr.catch(function () { audioEl.onerror = null; fallback(); });
       };
 
