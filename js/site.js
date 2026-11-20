@@ -613,7 +613,7 @@
           speechSynthesis.speak(u);
         };
         audioEl.onended = end; audioEl.onerror = function () { audioEl.onerror = null; fallback(); };
-        audioEl.src = vBase + id + '.mp3?v=ub12';
+        audioEl.src = vBase + id + '.mp3?v=ub13';
         var pr = audioEl.play(); if (pr && pr.catch) pr.catch(function () { audioEl.onerror = null; fallback(); });
       };
 
@@ -962,6 +962,104 @@
           });
       });
     }
+  })();
+
+  /* ---------- 12. email chooser ----------
+     A mailto link on its own opens whatever mail app the computer defaults to (often Outlook).
+     Every mailto link on the page opens this small menu instead: Gmail, Outlook, Yahoo Mail,
+     the visitor's own email app, or copy the address. Subject and body carry over.
+     On phones it opens as a sheet from the bottom of the screen. */
+  (function () {
+    var enc = encodeURIComponent, menu, scrim, toEl, appLink, copyBtn, copyLabel, trigger = null, parts = null, copyTimer = null;
+    var APPS = [
+      { id: 'gmail', name: 'Gmail', mark: 'G', color: '#EA4335', url: function (m) { return 'https://mail.google.com/mail/?view=cm&fs=1&to=' + enc(m.to) + (m.su ? '&su=' + enc(m.su) : '') + (m.body ? '&body=' + enc(m.body) : ''); } },
+      { id: 'outlook', name: 'Outlook', note: 'Outlook.com, Hotmail, Live', mark: 'O', color: '#0F6CBD', url: function (m) { return 'https://outlook.live.com/mail/0/deeplink/compose?to=' + enc(m.to) + (m.su ? '&subject=' + enc(m.su) : '') + (m.body ? '&body=' + enc(m.body) : ''); } },
+      { id: 'yahoo', name: 'Yahoo Mail', mark: 'Y', color: '#6001D2', url: function (m) { return 'https://compose.mail.yahoo.com/?to=' + enc(m.to) + (m.su ? '&subject=' + enc(m.su) : '') + (m.body ? '&body=' + enc(m.body) : ''); } }
+    ];
+    var ICON = {
+      out: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>',
+      mail: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>',
+      copy: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M4 16V5a2 2 0 0 1 2-2h11"/></svg>',
+      done: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>'
+    };
+    var parse = function (href) {
+      var raw = href.replace(/^mailto:/i, ''), i = raw.indexOf('?');
+      var sp = new URLSearchParams(i < 0 ? '' : raw.slice(i + 1));
+      return { to: decodeURIComponent(i < 0 ? raw : raw.slice(0, i)), su: sp.get('subject') || '', body: sp.get('body') || '', href: href };
+    };
+    var build = function () {
+      if (menu) return;
+      scrim = document.createElement('div'); scrim.className = 'mp-scrim'; scrim.hidden = true;
+      menu = document.createElement('div'); menu.className = 'mp'; menu.hidden = true;
+      menu.setAttribute('role', 'dialog'); menu.setAttribute('aria-label', 'Choose how to send your email');
+      menu.innerHTML = '<div class="mp-head"><span>Email us at</span><b data-mp-to></b></div><div class="mp-list">' +
+        APPS.map(function (a) { return '<a class="mp-opt" data-mp="' + a.id + '" target="_blank" rel="noopener"><i style="--c:' + a.color + '" aria-hidden="true">' + a.mark + '</i><span>' + a.name + (a.note ? '<small>' + a.note + '</small>' : '') + '</span>' + ICON.out + '</a>'; }).join('') +
+        '<a class="mp-opt" data-mp="app"><i class="mp-ico" aria-hidden="true">' + ICON.mail + '</i><span>Other email app<small>Apple Mail, Outlook app and others</small></span></a>' +
+        '<button type="button" class="mp-opt" data-mp="copy"><i class="mp-ico" aria-hidden="true">' + ICON.copy + '</i><span data-mp-copy>Copy email address</span></button></div>';
+      document.body.appendChild(scrim); document.body.appendChild(menu);
+      toEl = $('[data-mp-to]', menu); appLink = $('[data-mp="app"]', menu); copyBtn = $('[data-mp="copy"]', menu); copyLabel = $('[data-mp-copy]', menu);
+      scrim.addEventListener('click', function () { close(false); });
+      $$('a.mp-opt', menu).forEach(function (a) {
+        a.addEventListener('click', function () { fwTrack('email_click', { app: a.getAttribute('data-mp') }); setTimeout(function () { close(false); }, 0); });
+      });
+      copyBtn.addEventListener('click', function () {
+        var done = function () {
+          fwTrack('email_click', { app: 'copy' });
+          copyBtn.classList.add('is-done'); $('i', copyBtn).innerHTML = ICON.done; copyLabel.textContent = 'Copied ' + parts.to;
+          clearTimeout(copyTimer); copyTimer = setTimeout(function () { close(true); }, 1400);
+        };
+        var fallback = function () {
+          var t = document.createElement('textarea'); t.value = parts.to; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;opacity:0';
+          document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(t); done();
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(parts.to).then(done, fallback); else fallback();
+      });
+      menu.addEventListener('keydown', function (e) {
+        var opts = $$('.mp-opt', menu), i = opts.indexOf(document.activeElement);
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); opts[(i + (e.key === 'ArrowDown' ? 1 : opts.length - 1)) % opts.length].focus(); }
+        else if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); opts[e.key === 'Home' ? 0 : opts.length - 1].focus(); }
+      });
+      menu.addEventListener('focusout', function (e) { if (e.relatedTarget && !menu.contains(e.relatedTarget) && e.relatedTarget !== trigger) close(false); });
+    };
+    var place = function () {
+      if (!menu || menu.hidden) return;
+      var sheet = window.innerWidth <= 560;
+      menu.classList.toggle('is-sheet', sheet); scrim.hidden = !sheet;
+      if (sheet) { menu.style.left = menu.style.top = ''; return; }
+      var r = trigger.getBoundingClientRect(), w = menu.offsetWidth, h = menu.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
+      var top = r.bottom + 8;
+      if (top + h > vh - 12 && r.top - 8 - h >= 12) top = r.top - 8 - h;
+      menu.style.left = Math.round(Math.min(Math.max(12, r.left), vw - w - 12)) + 'px';
+      menu.style.top = Math.round(Math.max(12, Math.min(top, vh - h - 12))) + 'px';
+    };
+    var open = function (a) {
+      build(); trigger = a; parts = parse(a.getAttribute('href'));
+      toEl.textContent = parts.to;
+      APPS.forEach(function (x) { $('[data-mp="' + x.id + '"]', menu).href = x.url(parts); });
+      appLink.href = parts.href;
+      clearTimeout(copyTimer); copyBtn.classList.remove('is-done'); $('i', copyBtn).innerHTML = ICON.copy; copyLabel.textContent = 'Copy email address';
+      menu.hidden = false; place();
+      a.setAttribute('aria-expanded', 'true');
+      $('.mp-opt', menu).focus({ preventScroll: true });
+    };
+    var close = function (refocus) {
+      if (!menu || menu.hidden) return;
+      menu.hidden = true; scrim.hidden = true; clearTimeout(copyTimer);
+      if (trigger) { trigger.setAttribute('aria-expanded', 'false'); if (refocus) trigger.focus({ preventScroll: true }); }
+    };
+    document.addEventListener('click', function (e) {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target.closest && e.target.closest('a[href^="mailto:"]');
+      if (a && !(menu && menu.contains(a))) {
+        e.preventDefault();
+        if (menu && !menu.hidden && trigger === a) close(false); else open(a);
+        return;
+      }
+      if (menu && !menu.hidden && !menu.contains(e.target)) close(false);
+    }, true);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu && !menu.hidden) close(true); });
+    window.addEventListener('resize', place);
+    window.addEventListener('scroll', place, { passive: true });
   })();
 
 })();

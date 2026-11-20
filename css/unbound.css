@@ -443,3 +443,38 @@
 @media (max-width:560px){.ubt-stats{grid-template-columns:1fr}.ubt-facts div{grid-template-columns:1fr;gap:4px}.ubt-more{margin:8px 0 0}}
 .ubt-tiles-2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:720px}
 @media (max-width:900px){.ubt-tiles-2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---------- email: the address on show, and the "send with" chooser ---------- */
+.foot-mail{display:inline-flex;align-items:center;gap:9px;margin-top:18px;padding:10px 16px 10px 12px;border-radius:var(--pill);background:#fff;border:1px solid var(--line-2);color:var(--ink);font-size:15px;font-weight:600;letter-spacing:-.005em;text-decoration:none;box-shadow:var(--shadow-sm);transition:border-color .2s,box-shadow .2s}
+.foot-mail:hover{border-color:var(--violet);box-shadow:var(--shadow-md)}
+.foot-mail svg,.book-mail svg,.ca-mail svg{width:17px;height:17px;flex:none;fill:none;stroke:var(--flame);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.book-mail{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:4px;padding:14px 16px;border-radius:var(--r-md);background:var(--bg-2);border:1px solid var(--line);font-size:15px;color:var(--ink-2)}
+.book-mail a{display:inline-flex;align-items:center;gap:8px;color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--lilac);text-decoration-thickness:2px;text-underline-offset:4px}
+.book-mail a:hover{text-decoration-color:var(--violet)}
+.cta-band .cta-mail svg{stroke:currentColor}
+.ca-mail{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.ca-mail.btn svg{stroke:var(--flame)}
+
+.mp{position:fixed;z-index:200;width:min(300px,calc(100vw - 24px));padding:8px;border-radius:18px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-lg);font-family:var(--body);animation:mp-in .16s var(--ease)}
+.mp[hidden],.mp-scrim[hidden]{display:none}
+.mp-head{display:grid;gap:3px;padding:8px 10px 12px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.mp-head span{font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;color:var(--mute)}
+.mp-head b{font-size:15px;font-weight:600;color:var(--ink);overflow-wrap:anywhere}
+.mp-list{display:grid;gap:2px}
+.mp-opt{display:flex;align-items:center;gap:12px;width:100%;min-height:46px;padding:7px 10px;border:0;border-radius:12px;background:none;color:var(--ink);font:500 14.5px/1.25 var(--body);text-align:left;text-decoration:none;cursor:pointer}
+.mp-opt:hover{background:var(--bg-2)}
+.mp-opt:focus{outline:none}
+.mp-opt:focus-visible{background:var(--bg-2);box-shadow:inset 0 0 0 2px var(--violet)}
+.mp-opt i{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--c,var(--bg-3));color:#fff;font:700 14px/1 var(--display);font-style:normal}
+.mp-opt i.mp-ico{background:var(--bg-3);color:var(--ink)}
+.mp-opt i svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mp-opt span{flex:1;min-width:0;display:grid;gap:2px}
+.mp-opt small{font-size:12px;font-weight:400;color:var(--mute)}
+.mp-opt>svg{flex:none;width:14px;height:14px;fill:none;stroke:var(--faint);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mp-opt.is-done i.mp-ico{background:var(--s);color:#fff}
+.mp.is-sheet{left:12px;right:12px;top:auto;bottom:max(12px,env(safe-area-inset-bottom));width:auto;padding:10px;border-radius:22px;animation:mp-up .22s var(--ease)}
+.mp.is-sheet .mp-opt{min-height:52px}
+.mp-scrim{position:fixed;inset:0;z-index:199;background:rgba(10,10,11,.32)}
+@keyframes mp-in{from{opacity:0;transform:translateY(-4px)}}
+@keyframes mp-up{from{opacity:0;transform:translateY(18px)}}
+@media (prefers-reduced-motion:reduce){.mp,.mp.is-sheet{animation:none}}
