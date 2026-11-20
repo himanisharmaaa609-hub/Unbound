@@ -56,7 +56,7 @@ Tokens live at the top of `css/site.css` (`--flame`, `--violet`, `--saffron`, `-
 ## Things to swap in before going live
 
 2. **Email address.** Every "Email us" link, booking invite and form uses `connect@weunbound.com`. To change it, search and replace it in `index.html`, `contact/index.html`, `llms.txt` and `js/site.js` (`SITE.emails` and `formTo`).
-3. **Forms.** The subscribe and contact forms send to `formTo` in `js/site.js` (`connect@weunbound.com`) through FormSubmit. The first time a form is sent, formsubmit.co emails that inbox a one-time activation link; nothing is delivered until it is clicked. To use your own endpoint instead, put a web app URL in `leadUrl`. With both empty, the forms offer to open the visitor's own email app instead.
+3. **Forms.** The contact form, newsletter sign-ups and booking notices go to `leadUrl` in `js/site.js`: a Google Apps Script web app (`tools/form-inbox.gs`) that saves each one to a Google Sheet called "UNBOUND website messages" and emails `connect@weunbound.com`, with Reply going to the visitor. To set it up: open script.google.com, start a new project, paste in `tools/form-inbox.gs`, run `setup` once and allow access (it creates the sheet and sends a test email), then Deploy → New deployment → Web app, execute as Me, access Anyone, and put the `/exec` address in `leadUrl`. Without `leadUrl`, the forms fall back to FormSubmit through `formTo`, which only works once its activation email has been clicked.
 4. **Booking link.** The calendar works without a backend: it opens a Google Calendar invite to the team (`SITE.emails`). To use Cal.com or Calendly instead, paste the link into `bookingUrl` in `js/site.js`.
 
 ## Hosting on Cloudflare
